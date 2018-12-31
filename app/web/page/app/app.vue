@@ -8,21 +8,29 @@ import 'babel-polyfill';
 import { sync } from 'vuex-router-sync';
 import store from './store';
 import router from './router';
+import { mapMutations } from 'vuex';
 
 sync(store, router);
 
 export default {
-  data() {
+  data () {
     return {
     };
   },
   router,
   store,
-  mounted() {
-    // 配置消息提示
-    this.$Message.config({
-      duration: 5
+  computed: {
+
+  },
+  mounted () {
+    window.addEventListener('resize', () => {
+      this.setHeight(window.innerHeight);
     });
+  },
+  methods: {
+    ...mapMutations({
+      setHeight: 'SET_WIN_HEIGHT'
+    })
   }
 };
 </script>
