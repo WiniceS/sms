@@ -1,171 +1,109 @@
-<style lang="less" scoped>
-@import "./main.less";
+<style lang="scss" scoped>
+@import "./main.scss";
 </style>
 <template>
-  <div class="main" :class="{'main-hide-text': shrink}">
-    <div class="sidebar-menu-con" :style="{width: shrink?'40px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-      <shrinkable-menu :shrink="shrink" :open-names="openedSubmenuArr" :menu-list="menuList">
-        <div slot="top" class="logo-con">
-          <span v-show="!shrink" key="max-logo">Edgar Server</span>
-          <span v-show="shrink" key="min-logo">E</span>
+  <el-container class="system">
+    <el-header class="system-header">
+      <div class="system-header-title">
+        <div
+          class="system-header-title-text"
+          :style="{width:isCollapse?'40px':'180px'}"
+        >
+          <div v-if="isCollapse">S</div>
+          <div v-else>Supermarket</div>
         </div>
-      </shrinkable-menu>
-    </div>
-    <div class="main-header-con" :style="{paddingLeft: shrink?'40px':'200px'}">
-      <div class="main-header">
-        <div class="navicon-con">
-          <div class="navicon-con-d" @click="toggleClick">
-            <EIcon v-if="shrink" size="25" type="menufold-right"></EIcon>
-            <EIcon v-else size="25" type="menufold"></EIcon>
-          </div>
-        </div>
-        <div class="header-middle-con">
-          <div class="main-breadcrumb">
-            <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
-          </div>
-        </div>
-        <div class="header-avator-con">
-          <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
-          <lock-screen></lock-screen>
-          <message-tip v-model="mesCount"></message-tip>
-          <div class="user-dropdown-menu-con">
-            <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
-              <Dropdown transfer>
-                <div>
-                  <Avatar :src="avatorPath" style="background: #619fe7;"></Avatar>
-                  <span class="main-user-name">{{ userName }}</span>
-                </div>
-                <DropdownMenu slot="list">
-                  <DropdownItem name="ownSpace">
-                    <Icon size="19" type="ios-person-outline"></Icon>
-                    <span style="margin-left: 5px;">个人中心</span>
-                  </DropdownItem>
-                  <DropdownItem name="loginout" divided>
-                    <Icon size="16" type="log-out"></Icon>
-                    <span style="margin-left: 5px;">退出登录</span>
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </Row>
-          </div>
+        <div class="system-header-title-button">
+          <el-button
+            type="warning"
+            icon="el-icon-star-off"
+            circle
+            @click="isCollapse=!isCollapse"
+          ></el-button>
         </div>
       </div>
-      <div class="tags-con">
-          <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
-      </div>
-    </div>
-    <div class="single-page-con" :style="{left: shrink?'40px':'200px'}">
-        <!-- <div class="single-page"> -->
-        <keep-alive :include="cachePage">
-            <router-view></router-view>
-        </keep-alive>
-        <!-- </div> -->
-    </div>
-  </div>
+      <div class="system-header-my">我的</div>
+    </el-header>
+    <el-container>
+      <el-aside  :style="{width:isCollapse?'60px':'200px'}">
+        <el-menu
+          default-active="0"
+          class=""
+          @open="handleOpen"
+          @close="handleClose"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          :collapse="isCollapse"
+        >
+          <el-menu-item v-for="(list,index) in menuList" :key="index" :index="index">
+            <i :class="list.icon"></i>
+            <span>{{list.name}}</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 <script>
-import shrinkableMenu from 'component/shrinkable-menu/shrinkable-menu.vue';
-import tagsPageOpened from 'component/tags/tags-page-opened.vue';
-import breadcrumbNav from 'component/breadcrumb/breadcrumb-nav.vue';
-import fullScreen from 'component/fullscreen/fullscreen.vue';
-import lockScreen from 'component/lockscreen/lockscreen.vue';
-import messageTip from 'component/message-tip/message-tip.vue';
 import Cookies from 'js-cookie';
 import util from 'framework/utils/utils.js';
 
 export default {
   components: {
-    shrinkableMenu,
-    tagsPageOpened,
-    breadcrumbNav,
-    fullScreen,
-    lockScreen,
-    messageTip
   },
-  data() {
+  data () {
     return {
+      isCollapse: true,
+      menuList: [{
+        icon: 'el-icon-edit',
+        name: '商品结算',
+        route: '/goodsDeal'
+      },
+      {
+        icon: 'el-icon-edit',
+        name: '商品入库',
+        route: '/goodsInput'
+      },
+      {
+        icon: 'el-icon-edit',
+        name: '商品统计',
+        route: '/goodsDeal'
+      },
+      {
+        icon: 'el-icon-edit',
+        name: '收支统计',
+        route: '/goodsDeal'
+      },
+      {
+        icon: 'el-icon-edit',
+        name: '其他支出',
+        route: '/goodsDeal'
+      },
+      {
+        icon: 'el-icon-edit',
+        name: '个人信息',
+        route: '/goodsDeal'
+      }],
       shrink: true,
       userName: '',
-      isFullScreen: false,
-      openedSubmenuArr: this.$store.state.app.openedSubmenuArr
+      isFullScreen: false
     };
   },
   computed: {
-    menuList() {
-      return this.$store.state.app.menuList;
-    },
-    pageTagsList() {
-      return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
-    },
-    currentPath() {
-      return this.$store.state.app.currentPath; // 当前面包屑数组
-    },
-    avatorPath() {
-      return localStorage.avatorImgPath;
-    },
-    cachePage() {
-      return this.$store.state.app.cachePage;
-    },
-    lang() {
-      return this.$store.state.app.lang;
-    },
-    menuTheme() {
-      return this.$store.state.app.menuTheme;
-    },
-    mesCount() {
-      return this.$store.state.app.messageCount;
-    }
   },
   methods: {
-    init() {
-      const pathArr = util.setCurrentPath(this, this.$route.name);
-      this.$store.commit('updateMenulist');
-      if (pathArr.length >= 2) {
-        this.$store.commit('addOpenSubmenu', pathArr[1].name);
-      }
-      this.userName = Cookies.get('edgar-user');
-      const messageCount = 3;
-      this.messageCount = messageCount.toString();
-      this.checkTag(this.$route.name);
-      this.$store.commit('setMessageCount', 3);
+    init () {
+    
     },
-    toggleClick() {
+    toggleClick () {
       this.shrink = !this.shrink;
-    },
-    handleClickUserDropdown(name) {
-      if (name === 'ownSpace') {
-        util.openNewPage(this, 'ownspace_index');
-        this.$router.push({
-          name: 'ownspace_index'
-        });
-      } else if (name === 'loginout') {
-        // 退出登录
-        this.$axios.post('/logout').then(res => {
-          this.$store.commit('logout', this);
-          this.$store.commit('clearOpenedSubmenu');
-          this.$router.push({
-            name: 'login'
-          });
-        });
-      }
-    },
-    checkTag(name) {
-      const openpageHasTag = this.pageTagsList.some(item => {
-        if (item.name === name) {
-          return true;
-        }
-        return false;
-      });
-      if (!openpageHasTag) { //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
-        util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
-      }
-    },
-    fullscreenChange(isFullScreen) {
-      // console.log(isFullScreen);
     }
   },
   watch: {
-    $route(to) {
+    $route (to) {
       this.$store.commit('setCurrentPageName', to.name);
       const pathArr = util.setCurrentPath(this, to.name);
       if (pathArr.length > 2) {
@@ -174,14 +112,14 @@ export default {
       this.checkTag(to.name);
       localStorage.currentPageName = to.name;
     },
-    lang() {
+    lang () {
       util.setCurrentPath(this, this.$route.name); // 在切换语言时用于刷新面包屑
     }
   },
-  mounted() {
+  mounted () {
     this.init();
   },
-  created() {
+  created () {
     // 显示打开的页面的列表
     this.$store.commit('setOpenedList');
   }

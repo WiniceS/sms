@@ -15,6 +15,7 @@
     "no-else-return": "off",
     "strict": "off",
     "linebreak-style": "off",
+    "space-before-function-paren": ["error", "always"],
     "no-irregular-whitespace": [
       "error",
       {

@@ -55,16 +55,16 @@ export const locking = {
 export const otherRouter = {
   path: '/',
   name: 'otherRouter',
-  redirect: '/home',
+  redirect: '/goodDeal',
   component: Main,
   children: [{
-    path: 'home',
+    path: 'goodDeal',
     title: {
-      i18n: 'home'
+      i18n: 'goodDeal'
     },
-    name: 'home_index',
+    name: 'goodDeal',
     component: () =>
-      import('../component/dashboard/dashboard.vue')
+      import('../component/good-deal/goods-deal.vue')
   },
   {
     path: 'ownspace',

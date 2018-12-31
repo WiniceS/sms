@@ -9,12 +9,16 @@ import mutations from './app/mutations';
 
 import app from './modules/app';
 import user from './modules/user';
+import goodsDeal from './modules/goodsDeal';
+import goodsInput from './modules/goodsInput';
 
 Vue.use(Vuex);
 
 const modules = {
   app,
-  user
+  user,
+  goodsDeal,
+  goodsInput
 };
 
 export default new Vuex.Store({
