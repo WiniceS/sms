@@ -1,3 +1,4 @@
+'use strict';
 const path = require('path');
 const fs = require('fs');
 module.exports = app => {
@@ -7,15 +8,8 @@ module.exports = app => {
     '/favicon.ico': fs.readFileSync(path.join(app.baseDir, 'app/web/asset/images/favicon.ico'))
   };
 
-  exports.view = {
-    cache: false
-  };
-
   exports.vuessr = {
-    layout: path.join(app.baseDir, 'app/web/view/layout.html'),
-    renderOptions: {
-      basedir: path.join(app.baseDir, 'app/view')
-    }
+    layout: path.join(app.baseDir, 'app/web/view/layout.html')
   };
 
   exports.logger = {
@@ -31,8 +25,21 @@ module.exports = app => {
   exports.keys = '123456';
 
   exports.middleware = [
+    'locals',
     'access'
   ];
+
+  exports.security = {
+    csrf: {
+      ignoreJSON: false,
+      cookieName: 'csrfToken',
+      // sessionName: 'csrfToken',
+      // headerName: 'x-csrf-token'
+    },
+    xframe: {
+      enable: false,
+    },
+  };
 
   return exports;
 };

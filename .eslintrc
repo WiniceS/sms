@@ -1,5 +1,4 @@
 {
-  "extends": "eslint-config-egg",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -8,14 +7,12 @@
     "arrow-parens": "off",
     "valid-jsdoc": "off",
     "eol-last": "off",
-    "no-undef": "off",
-    "template-curly-spacing": "off",
     "array-bracket-spacing": "off",
     "no-unused-vars": "off",
     "no-else-return": "off",
     "strict": "off",
     "linebreak-style": "off",
-    "space-before-function-paren": ["error", "always"],
+    "newline-per-chained-call": "off",
     "no-irregular-whitespace": [
       "error",
       {
@@ -40,10 +37,8 @@
   "globals": {
     "EASY_ENV_IS_PROD": true,
     "EASY_ENV_IS_NODE": true,
-    "EASY_ENV_IS_BROWSER": true
+    "EASY_ENV_IS_BROWSER": true,
+    "EASY_ENV_IS_DEV": true
   },
-  "plugins": [
-    "vue"
-  ],
   "parser": "babel-eslint"
 }
