@@ -52,8 +52,8 @@ export default {
     return {
       collapse: false,
       site: {
-        name: "Admin",
-        description: "Egg-Element-Admin"
+        name: "SMS",
+        description: "Supermarket System"
       }
     };
   },

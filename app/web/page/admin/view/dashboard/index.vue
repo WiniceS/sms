@@ -1,6 +1,6 @@
 <template>
   <div style="font-size: 24px; text-align: center">
-    <panel-group></panel-group>
+    lall
   </div>
 </template>
 <style>

@@ -5,6 +5,8 @@ import Vuex from 'vuex';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
+import goodsDeal from './moudles/goodsDeal'
+import goodsInput from './moudles/goodsInput'
 
 Vue.use(Vuex);
 
@@ -19,6 +21,10 @@ export default function createStore(initState) {
     state,
     actions,
     getters,
-    mutations
+    mutations,
+    modules: {
+      goodsDeal,
+      goodsInput
+    },
   });
 }

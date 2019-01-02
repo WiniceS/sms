@@ -10,8 +10,7 @@ export default function createRouter() {
   return new VueRouter({
     mode: 'history',
     base: '/admin/',
-    routes: [
-      {
+    routes: [{
         path: '/',
         component: Dashboard
       },
@@ -28,7 +27,16 @@ export default function createRouter() {
         component: () => import('../view/detail.vue')
       },
       {
-        path: '*', component: () => import('../view/notfound.vue')
+        path: '/deal',
+        component: () => import('../view/goodsDeal/index.vue')
+      },
+      {
+        path: '/input',
+        component: () => import('../view/goodsInput/index.vue')
+      },
+      {
+        path: '*',
+        component: () => import('../view/notfound.vue')
       }
     ]
   });
