@@ -5,6 +5,9 @@ import Vuex from 'vuex';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
+import {
+  initState
+} from './initState';
 import goodsDeal from './moudles/goodsDeal'
 import goodsInput from './moudles/goodsInput'
 import goodsEarning from './moudles/goodsEarning'
@@ -13,14 +16,8 @@ import goodsStatistics from './moudles/goodsStatistics'
 import personal from './moudles/personal'
 
 Vue.use(Vuex);
-
-export default function createStore(initState) {
-  const state = {
-    articleTotal: 0,
-    articleList: [],
-    article: {},
-    ...initState
-  };
+const state = initState()
+export default function createStore(state) {
   return new Vuex.Store({
     state,
     actions,

@@ -1,17 +1,23 @@
 <template>
   <div style="height:100%">
-     <header class="header">
-      <div class="top-left-bar" :class="{ 'top-left-bar-hidden': collapse, 'top-left-bar-show': !collapse }">
-          <span>{{ collapse ? site.name : site.description }}</span>
+    <header class="header">
+      <div
+        class="top-left-bar"
+        :class="{ 'top-left-bar-hidden': collapse, 'top-left-bar-show': !collapse }"
+      >
+        <span>{{ collapse ? site.name : site.description }}</span>
       </div>
-      <span class="header-btn" @click="sidebarToggle"><i class="el-icon-menu"></i></span>
+      <span
+        class="header-btn"
+        @click="sidebarToggle"
+      ><i class="el-icon-menu"></i></span>
       <div class="right">
         <span class="header-btn">
           <a v-bind:href="$t('lang.href')"><i class="el-icon-message"></i></a>
         </span>
         <el-dropdown>
           <span class="header-btn">
-              {{$t('lang.text')}}<i class="el-icon-arrow-down el-icon--right"></i>
+            {{$t('lang.text')}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="switchLang('en')">英文</el-dropdown-item>
@@ -19,8 +25,11 @@
           </el-dropdown-menu>
         </el-dropdown>
         <span class="header-btn">
-          <el-badge :value="2" class="badge">
-              <i class="el-icon-message"></i>
+          <el-badge
+            :value="2"
+            class="badge"
+          >
+            <i class="el-icon-message"></i>
           </el-badge>
         </span>
         <span class="header-btn">
@@ -28,7 +37,7 @@
         </span>
         <el-dropdown>
           <span class="header-btn">
-              Admin<i class="el-icon-arrow-down el-icon--right"></i>
+            Admin<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>{{$t('header.profile')}}</el-dropdown-item>
@@ -48,7 +57,7 @@ export default {
   components: {
     LeftMenu
   },
-  data() {
+  data () {
     return {
       collapse: false,
       site: {
@@ -59,7 +68,7 @@ export default {
   },
   computed: {},
   methods: {
-    sidebarToggle(e) {
+    sidebarToggle (e) {
       e.preventDefault();
       if (this.collapse) {
         document.body.classList.remove("sidebar-hidden");
@@ -68,15 +77,16 @@ export default {
         document.body.classList.add("sidebar-hidden");
         this.collapse = true;
       }
+      this.$emit('onChangeCollapse', this.collapse)
     },
-    logout() {
+    logout () {
       window.location.replace("/login");
     },
-    switchLang(lang) {
+    switchLang (lang) {
       window.location.href = `/admin?locale=${lang}`;
     }
   },
-  mounted: function() {
+  mounted: function () {
     if (!this.collapse) {
       document.body.classList.remove("sidebar-hidden");
     } else {
