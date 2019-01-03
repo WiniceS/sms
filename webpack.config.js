@@ -7,5 +7,19 @@ module.exports = {
     admin: 'app/web/page/admin/index.js'
   },
   cssExtract: true,
-  dll: ['vue', 'vue-router', 'vuex', 'axios', 'vuex-router-sync', 'vue-i18n']
+  dll: ['vue', 'vue-router', 'vuex', 'axios', 'vuex-router-sync', 'vue-i18n'],
+  module: {
+    rules: [{
+        test: /.vue$/,
+        loader: "vue-loader"
+      },
+      {
+        test: /.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: [{
+          loader: "babel-loader"
+        }]
+      }
+    ]
+  }
 };

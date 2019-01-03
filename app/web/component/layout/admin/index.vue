@@ -8,7 +8,7 @@
     </LayoutContent>
   </div>
 </template>
-<style>
+<style lang="css">
 @import "../../../asset/css/global.css";
 @import "./index.css";
 </style>
