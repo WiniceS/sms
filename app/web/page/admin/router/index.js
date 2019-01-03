@@ -35,6 +35,22 @@ export default function createRouter() {
         component: () => import('../view/goodsInput/index.vue')
       },
       {
+        path: '/statistics',
+        component: () => import('../view/goodsStatistics/index.vue')
+      },
+      {
+        path: '/earning',
+        component: () => import('../view/goodsEarning/index.vue')
+      },
+      {
+        path: '/expend',
+        component: () => import('../view/goodsExpend/index.vue')
+      },
+      {
+        path: '/personal',
+        component: () => import('../view/personal/index.vue')
+      },
+      {
         path: '*',
         component: () => import('../view/notfound.vue')
       }
