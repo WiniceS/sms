@@ -22,7 +22,7 @@ export default {
     AdminLayout,
   },
   computed: {},
-  mounted () {
+  mounted() {
     this.$store.commit(types.SET_WINHEIGHT, window.innerHeight)
     window.onresize = () => {
       this.$store.commit(types.SET_WINHEIGHT, window.innerHeight)

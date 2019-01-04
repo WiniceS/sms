@@ -1,7 +1,8 @@
 {
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module"
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "parser": "babel-eslint"
   },
   "rules": {
     "arrow-parens": "off",
@@ -40,5 +41,5 @@
     "EASY_ENV_IS_BROWSER": true,
     "EASY_ENV_IS_DEV": true
   },
-  "parser": "babel-eslint"
+  "extends": ["plugin:vue/base"]
 }
