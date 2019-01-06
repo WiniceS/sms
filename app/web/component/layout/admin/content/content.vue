@@ -1,6 +1,9 @@
 <template>
   <div class='main-content'>
-    <div class='main-container' :style="{marginLeft:collapse?'64px':'230px'}">
+    <div
+      class='main-container'
+      :style="{marginLeft:collapse?'64px':'230px'}"
+    >
       <router-view></router-view>
     </div>
   </div>
@@ -17,9 +20,10 @@ export default {
     }
   },
   props: ['collapse'],
+  computed: {
+  },
   components: {},
   mounted () {
-
   }
 };
 </script>

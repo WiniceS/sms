@@ -1,9 +1,9 @@
 .main {
   display: flex;
-  margin-top: -80px;
-  padding: 80px 0 120px;
   box-sizing: border-box;
+  background-color: #efefef;
 }
+
 .main .el-menu:not(.el-menu--collapse) {
   width: 230px;
 }
@@ -12,20 +12,23 @@
   margin-top: 8px;
   margin-bottom: 16px;
 }
+
 .admin label {
   padding-left: 8px;
   padding-right: 8px;
   color: #878d99
 }
 
-.admin .search-input{
+.admin .search-input {
   max-width: 200px;
 }
-.admin .search-button{
+
+.admin .search-button {
   margin-left: 16px;
 }
-.admin .add-button{
-  float:right;
+
+.admin .add-button {
+  float: right;
   margin-right: 16px;
 }
 

@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="goods-deal"
-    :style="containerHeight"
-  >
+  <div class="goods-deal">
     <div class="goods-deal-input">
       <div class="goods-deal-input-id">
         <el-input
@@ -22,7 +19,7 @@
       :summary-method="getSummaries"
       show-summary
       stripe
-      :height="containerPageHeight-140"
+      :height="winHeight-170"
       :style="{width: '100%;'}"
       border
     >
@@ -87,15 +84,27 @@
       </el-table-column>
     </el-table>
     <div class="goods-deal-button">
-      <el-button
-        type="warning"
-        @click="clearDeal"
-      >清空</el-button>
-      <el-button
-        type="primary"
-        :style="{width:'150px'}"
-        @click="settleAccounts"
-      >确认</el-button>
+      <div class="goods-deal-sale">
+        <el-input
+          v-model="sale"
+          placeholder="请输入优惠金额"
+        ></el-input>
+        <el-button
+          type="primary"
+          @click="clearDeal"
+        >清空</el-button>
+      </div>
+      <div>
+        <el-button
+          type="warning"
+          @click="clearDeal"
+        >清空</el-button>
+        <el-button
+          type="primary"
+          :style="{width:'150px'}"
+          @click="settleAccounts"
+        >确认</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -107,16 +116,14 @@ export default {
   data () {
     return {
       input: '',
+      sale: 0,
       dialogVisible: false
     }
   },
   computed: {
     ...mapState('goodsDeal', []),
-    ...mapGetters(['containerPageHeight']),
-    ...mapGetters('goodsDeal', ['computedDealList']),
-    containerHeight () {
-      return `height:${this.containerPageHeight - 40}px;`
-    }
+    ...mapState(['winHeight']),
+    ...mapGetters('goodsDeal', ['computedDealList'])
   },
   methods: {
     ...mapActions('goodsDeal', []),
@@ -203,7 +210,12 @@ export default {
   .goods-deal-button {
     height: 50px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .goods-deal-sale {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
   }
 }
