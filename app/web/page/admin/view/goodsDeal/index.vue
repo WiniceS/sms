@@ -28,6 +28,7 @@
         label="商品编号"
         header-align="center"
         show-overflow-tooltip
+        align="center"
       >
       </el-table-column>
       <el-table-column
@@ -35,6 +36,7 @@
         label="商品名称"
         header-align="center"
         show-overflow-tooltip
+        align="center"
       >
       </el-table-column>
       <el-table-column
@@ -42,6 +44,7 @@
         label="商品规格"
         header-align="center"
         show-overflow-tooltip
+        align="center"
       >
       </el-table-column>
       <el-table-column
@@ -49,6 +52,7 @@
         label="商品售价"
         header-align="center"
         show-overflow-tooltip
+        align="center"
         min-width="80"
       >
       </el-table-column>
@@ -58,6 +62,7 @@
         header-align="center"
         show-overflow-tooltip
         min-width="80"
+        align="center"
       >
       </el-table-column>
       <el-table-column
@@ -66,6 +71,7 @@
         header-align="center"
         show-overflow-tooltip
         min-width="100"
+        align="center"
       >
       </el-table-column>
       <el-table-column
@@ -73,8 +79,19 @@
         header-align="center"
         show-overflow-tooltip
         min-width="80"
+        align="center"
       >
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            title="数量减1"
+            @click="handleDelete(scope.row.goodsId)"
+          >-</el-button>
+          <el-button
+            size="mini"
+            title="数量加1"
+            @click="handleDelete(scope.row.goodsId)"
+          >+</el-button>
           <el-button
             size="mini"
             type="danger"
@@ -91,8 +108,9 @@
         ></el-input>
         <el-button
           type="primary"
+          :style="{marginLeft:'20px'}"
           @click="clearDeal"
-        >清空</el-button>
+        >确认</el-button>
       </div>
       <div>
         <el-button
