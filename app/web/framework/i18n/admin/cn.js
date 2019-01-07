@@ -9,7 +9,7 @@ export default {
     input: '商品入库',
     statistics: '商品统计',
     earning: '收支统计',
-    expend: '其他支出',
+    expend: '其他收支',
     personal: '个人信息'
   },
   lang: {

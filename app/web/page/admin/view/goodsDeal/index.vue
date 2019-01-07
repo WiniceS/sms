@@ -78,7 +78,7 @@
         label="操作"
         header-align="center"
         show-overflow-tooltip
-        min-width="80"
+        min-width="180"
         align="center"
       >
         <template slot-scope="scope">
@@ -109,8 +109,8 @@
         <el-button
           type="primary"
           :style="{marginLeft:'20px'}"
-          @click="clearDeal"
-        >确认</el-button>
+          @click="onSaleNumber"
+        >添加优惠</el-button>
       </div>
       <div>
         <el-button
@@ -144,7 +144,7 @@ export default {
     ...mapGetters('goodsDeal', ['computedDealList'])
   },
   methods: {
-    ...mapActions('goodsDeal', []),
+    ...mapActions('goodsDeal', ['onSale']),
     ...mapMutations('goodsDeal', {
       clearDealList: 'CLEAR_DEAL_LIST',
       delDealList: 'DEL_DEAL_LIST'
@@ -179,12 +179,16 @@ export default {
           sums[index] += ' 元'
         }
       })
-
       return sums
     },
     // 删除一行销售商品
     handleDelete (id) {
       this.delDealList(id)
+    },
+    onSaleNumber () {
+      if (this.sale > 0) {
+        this.onSale(this.sale)
+      }
     },
     // 清空销售列表
     clearDeal () {

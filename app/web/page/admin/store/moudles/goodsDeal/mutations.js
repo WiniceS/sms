@@ -11,6 +11,22 @@ const mutations = {
       return e.goodsId !== id
     })
   },
+  [types.PLUS_DEAL_LIST](state, id) {
+    state.goodsDealList = state.goodsDealList.map(e => {
+      if (e.goodsId === id) {
+        e.goodsSellNumber++
+      }
+      return e
+    })
+  },
+  [types.MINUS_DEAL_LIST](state, id) {
+    state.goodsDealList = state.goodsDealList.map(e => {
+      if (e.goodsId === id) {
+        e.goodsSellNumber--
+      }
+      return e
+    }).filter(f => f.goodsSellNumber > 0)
+  },
   [types.CLEAR_DEAL_LIST](state) {
     state.goodsDealList = []
   }
