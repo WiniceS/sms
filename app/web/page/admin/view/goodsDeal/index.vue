@@ -85,27 +85,29 @@
           <el-button
             size="mini"
             title="数量减1"
-            @click="handleDelete(scope.row.goodsId)"
+            @click="minusDealList(scope.row.goodsId)"
           >-</el-button>
           <el-button
             size="mini"
             title="数量加1"
-            @click="handleDelete(scope.row.goodsId)"
+            @click="plusDealList(scope.row.goodsId)"
           >+</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.row.goodsId)"
+            @click="delDealList(scope.row.goodsId)"
           >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="goods-deal-button">
       <div class="goods-deal-sale">
-        <el-input
+        <el-input-number
           v-model="sale"
+          controls-position="right"
+          :min="0" 
           placeholder="请输入优惠金额"
-        ></el-input>
+        ></el-input-number>
         <el-button
           type="primary"
           :style="{marginLeft:'20px'}"
@@ -147,7 +149,9 @@ export default {
     ...mapActions('goodsDeal', ['onSale']),
     ...mapMutations('goodsDeal', {
       clearDealList: 'CLEAR_DEAL_LIST',
-      delDealList: 'DEL_DEAL_LIST'
+      delDealList: 'DEL_DEAL_LIST',
+      plusDealList: 'PLUS_DEAL_LIST',
+      minusDealList: 'MINUS_DEAL_LIST'
     }),
     // 自定义合计栏样式
     getSummaries (param) {

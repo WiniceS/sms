@@ -8,9 +8,10 @@ export default {
       goodsId: '0000000000000',
       goodsName: '优惠金额',
       goodsSpecification: '',
-      goodsSell: sale,
+      goodsSell: -sale,
       goodsSellNumber: 1
     }
-    commit('types.ADD_DEAL_LIST', tmp)
+    const tmpList = state.goodsDealList.filter(f => f.goodsId !== '0000000000000').concat([tmp])
+    commit(types.SET_DEAL_LIST, tmpList)
   }
 }
