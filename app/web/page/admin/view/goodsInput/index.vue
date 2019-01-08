@@ -1,15 +1,12 @@
 <template>
-  <div
-    class="goods-input"
-    :style="containerHeight"
-  >
+  <div class="goods-input">
     <el-row class="goods-input-form">
-      <h1>商品入库</h1>
       <el-form
         :model="goodsInputForm"
         :rules="rules"
+        inline
         ref="goodsInputForm"
-        label-width="80px"
+        label-width="100px"
         size="mini"
       >
         <el-form-item
@@ -19,6 +16,7 @@
           <el-input
             v-model="goodsInputForm.goodsId"
             placeholder="请输入商品编号"
+            :style="{width:'194px'}"
           ></el-input>
         </el-form-item>
         <el-form-item
@@ -28,6 +26,7 @@
           <el-input
             v-model="goodsInputForm.goodsName"
             placeholder="请输入商品名称"
+            :style="{width:'194px'}"
           ></el-input>
         </el-form-item>
         <el-form-item
@@ -37,6 +36,7 @@
           <el-input
             v-model="goodsInputForm.goodsSpecification"
             placeholder="请输入商品规格"
+            :style="{width:'194px'}"
           ></el-input>
         </el-form-item>
         <el-form-item
@@ -80,6 +80,7 @@
           <el-input
             v-model="goodsInputForm.goodsSell"
             placeholder="请输入商品售价"
+            :style="{width:'194px'}"
           >
             <template slot="append">元</template>
           </el-input>
@@ -91,6 +92,7 @@
           <el-input
             v-model="goodsInputForm.goodsCost"
             placeholder="请输入商品成本"
+            :style="{width:'194px'}"
           >
             <template slot="append">元</template>
           </el-input>
@@ -99,16 +101,20 @@
           label="商品数量"
           prop="goodsNumber"
         >
-          <el-input
+          <el-input-number
             v-model="goodsInputForm.goodsNumber"
             placeholder="请输入商品数量"
-          ></el-input>
+            controls-position="right"
+            :style="{width:'194px'}"
+            :min="0"
+          ></el-input-number>
         </el-form-item>
         <el-form-item>
           <el-button
             type="primary"
             @click="submitForm('goodsInputForm')"
             size="mini"
+            :style="{marginLeft:'30px'}"
           >商品入库</el-button>
           <el-button
             @click="resetForm('goodsInputForm')"
@@ -118,24 +124,26 @@
       </el-form>
     </el-row>
     <el-row class="goods-input-table">
-      <h1>最近添加记录</h1>
+      <h5>最近添加记录</h5>
       <el-table
         :data="goodsInputData"
         stripe
-        :height="winHeight-100"
+        :height="winHeight-330"
         border
       >
         <el-table-column
           prop="goodsId"
           label="商品编号"
           header-align="center"
+          align="center"
           show-overflow-tooltip
-          width="150"
+          min-width="150"
         >
         </el-table-column>
         <el-table-column
           prop="goodsName"
           label="商品名称"
+          align="center"
           header-align="center"
           show-overflow-tooltip
         >
@@ -143,6 +151,7 @@
         <el-table-column
           prop="goodsSpecification"
           label="商品规格"
+          align="center"
           header-align="center"
           show-overflow-tooltip
         >
@@ -150,6 +159,7 @@
         <el-table-column
           prop="goodsSell"
           label="商品售价"
+          align="center"
           header-align="center"
           show-overflow-tooltip
           width="80"
@@ -158,6 +168,7 @@
         <el-table-column
           prop="goodsCost"
           label="商品成本"
+          align="center"
           header-align="center"
           show-overflow-tooltip
           width="80"
@@ -166,6 +177,7 @@
         <el-table-column
           prop="goodsNumber"
           label="商品数量"
+          align="center"
           header-align="center"
           show-overflow-tooltip
           width="80"
@@ -174,6 +186,7 @@
         <el-table-column
           label="操作"
           header-align="center"
+          align="center"
           show-overflow-tooltip
           width="150"
           fixed="right"
@@ -183,7 +196,7 @@
               size="mini"
               type="primay"
               @click="handleDelete(scope.row.goodsId)"
-            >编辑</el-button>
+            >修改</el-button>
             <el-button
               size="mini"
               type="danger"
@@ -195,11 +208,12 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page="currentPage"
+        :style="{textAlign:'right',margin:'5px 0'}"
+        :page-sizes="[20, 40, 60, 80]"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="total"
       >
       </el-pagination>
     </el-row>
@@ -218,9 +232,9 @@ export default {
         goodsSpecification: '',
         goodsUnit: '',
         goodsVariety: '',
-        goodsSell: '',
-        goodsCost: '',
-        goodsNumber: ''
+        goodsSell: 0,
+        goodsCost: 0,
+        goodsNumber: 0
       },
       rules: {
         goodsId: [
@@ -248,16 +262,15 @@ export default {
         goodsNumber: [
           { required: true, message: '请输入商品数量', trigger: 'blur' }
         ]
-      }
+      },
+      pageSize: 20,
+      currentPage: 1,
+      total: 100
     }
   },
   computed: {
     ...mapState(['winHeight']),
-    ...mapState('goodsInput', ['goodsInputData']),
-    ...mapGetters(['containerPageHeight']),
-    containerHeight () {
-      return `height:${this.containerPageHeight - 40}px;`
-    }
+    ...mapState('goodsInput', ['goodsInputData', 'varietyOption', 'unitOption'])
   },
   methods: {
     ...mapActions('goodsInput', ['getGoodsDeal', 'del']),
@@ -281,6 +294,12 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    handleSizeChange (size) {
+      this.pageSize = size
+    },
+    handleCurrentChange (page) {
+      this.currentPage = page
     }
   }
 }
@@ -288,10 +307,9 @@ export default {
 
 <style lang="scss">
 .goods-input {
-  display: flex;
   background-color: #fff;
   .goods-input-form {
-    width: 300px;
+    width: 100%;
     padding: 20px 10px;
   }
   .goods-input-table {
