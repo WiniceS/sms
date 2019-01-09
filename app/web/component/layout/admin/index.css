@@ -2,6 +2,7 @@
   display: flex;
   box-sizing: border-box;
   background-color: #efefef;
+  height: 100%;
 }
 
 .main .el-menu:not(.el-menu--collapse) {

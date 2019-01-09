@@ -7,70 +7,36 @@ export function initState() {
       goodsSpecification: '250毫升',
       goodsSell: '1',
       goodsCost: '0.8',
-      goodsNumber: '100'
+      goodsNumber: '100',
+      goodsUnit: 'he',
+      goodsVariety: '4'
     }, {
       goodsId: '6901939122846',
       goodsName: '雪菲力',
       goodsSpecification: '250毫升',
       goodsSell: '1',
       goodsCost: '0.8',
-      goodsNumber: '100'
+      goodsNumber: '100',
+      goodsUnit: 'he',
+      goodsVariety: '4'
     }, {
       goodsId: '6901939122846',
       goodsName: '雪菲力',
       goodsSpecification: '250毫升',
       goodsSell: '1',
       goodsCost: '0.8',
-      goodsNumber: '100'
+      goodsNumber: '100',
+      goodsUnit: 'he',
+      goodsVariety: '4'
     }, {
       goodsId: '6901939122846',
       goodsName: '雪菲力',
       goodsSpecification: '250毫升',
       goodsSell: '1',
       goodsCost: '0.8',
-      goodsNumber: '100'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100'
+      goodsNumber: '100',
+      goodsUnit: 'he',
+      goodsVariety: '4'
     }],
     unitOption: [{
       label: '盒',

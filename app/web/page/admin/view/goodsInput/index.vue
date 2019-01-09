@@ -195,7 +195,7 @@
             <el-button
               size="mini"
               type="primay"
-              @click="handleDelete(scope.row.goodsId)"
+              @click="handleEdit(scope.row)"
             >修改</el-button>
             <el-button
               size="mini"
@@ -275,22 +275,14 @@ export default {
   methods: {
     ...mapActions('goodsInput', ['getGoodsDeal', 'del']),
     submitForm () {
-      // this.$refs[formName].validate((valid) => {
-      // if (valid) {
-      // alert('submit!')
-      console.log('this', this)
-      console.log('this.getGoodsDeal', this.getGoodsDeal)
-      this.getGoodsDeal().then(res => {
-        console.log(res)
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
-      this.del().then(res => {
-        console.log(res)
-      })
-      // } else {
-      // console.log('error submit!!')
-      // return false
-      // }
-      // })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
@@ -300,6 +292,34 @@ export default {
     },
     handleCurrentChange (page) {
       this.currentPage = page
+    },
+    handleEdit (item) {
+      console.log(item)
+      this.goodsInputForm.goodsId = item.goodsId
+      this.goodsInputForm.goodsName = item.goodsName
+      this.goodsInputForm.goodsSpecification = item.goodsSpecification
+      this.goodsInputForm.goodsUnit = item.goodsUnit
+      this.goodsInputForm.goodsVariety = item.goodsVariety
+      this.goodsInputForm.goodsSell = item.goodsSell
+      this.goodsInputForm.goodsCost = item.goodsCost
+      this.goodsInputForm.goodsNumber = item.goodsNumber
+    },
+    handleDelete (id) {
+      this.$confirm('此操作会删除其商品，库存中将不再有此商品，是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }
