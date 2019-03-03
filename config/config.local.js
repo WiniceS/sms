@@ -48,9 +48,9 @@ module.exports = app => {
       // 用户名
       user: 'root',
       // 密码
-      password: 'wings4290',
+      password: '123456',
       // 数据库名
-      database: 'supermarket',
+      database: 'sms',
     },
     // 是否加载到 app 上，默认开启
     app: true,

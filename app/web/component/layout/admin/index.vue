@@ -3,7 +3,12 @@
     <LayoutHeader @onChangeCollapse="collapse=$event"></LayoutHeader>
     <LayoutContent :collapse="collapse">
       <div slot='content'>
-        <slot name='main'></slot>
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <router-view></router-view>
+        </transition>
       </div>
     </LayoutContent>
   </div>
