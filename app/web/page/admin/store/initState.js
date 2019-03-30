@@ -3,7 +3,8 @@ export function initState() {
     articleTotal: 0,
     articleList: [],
     article: {},
-    
-    winHeight: 0
+
+    winHeight: 0,
+    userInfo: {}
   }
 }
