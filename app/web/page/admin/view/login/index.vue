@@ -67,12 +67,12 @@ export default {
     ...mapActions(['verifyUser']),
     async onSubmit () {
       await this.verifyUser(this.form)
+      this.$router.push('admin')
     },
     async checkUser () {
       await new Promise((resolve, reject) => {
         return setTimeout(() => {
           console.log('验证通过')
-          this.$router.push('admin')
         }, 1000)
       })
     }

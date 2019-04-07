@@ -66,7 +66,7 @@ const actions = {
       username,
       password
     }
-    return request.post('/login/api', userInfo, store).then(res => {
+    return request.post('/login/api/login', userInfo, store).then(res => {
       commit(Type.SET_USERINFO, res)
     })
   }
