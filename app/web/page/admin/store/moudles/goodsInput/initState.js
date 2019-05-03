@@ -1,5 +1,6 @@
 export function initState() {
   return {
+    goodInfo: {},
     // 商品入库记录
     goodsInputData: [{
       goodsId: '6901939122846',

@@ -11,5 +11,6 @@ module.exports = app => {
   router.post('/admin/api/article/add', controller.admin.add);
   router.get('/admin/api/article/del/:id', controller.admin.del);
   router.get('/admin/api/article/:id', controller.admin.detail);
+  router.get('/admin/api/goods/getGoodsInfo/:id', controller.goods.getGoodInfo);
   router.get('/admin(/.+)?', controller.admin.home);
 };

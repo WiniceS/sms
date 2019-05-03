@@ -273,16 +273,17 @@ export default {
     ...mapState('goodsInput', ['goodsInputData', 'varietyOption', 'unitOption'])
   },
   methods: {
-    ...mapActions('goodsInput', ['getGoodsDeal', 'del']),
+    ...mapActions('goodsInput', ['getGoodInfo']),
     submitForm () {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      this.getGoodInfo({ id: this.goodsInputForm.goodsId })
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     alert('submit!')
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()

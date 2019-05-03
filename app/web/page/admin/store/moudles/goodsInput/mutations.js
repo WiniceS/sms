@@ -13,6 +13,9 @@ const mutations = {
   },
   [types.CLEAR_DEAL_LIST](state) {
     state.goodsDealList = []
+  },
+  [types.SET_GOODINFO](state, info) {
+    state.goodInfo = info
   }
 }
 
