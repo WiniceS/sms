@@ -10,7 +10,8 @@ export function initState() {
       goodsCost: '0.8',
       goodsNumber: '100',
       goodsUnit: 'he',
-      goodsVariety: '4'
+      goodsVariety: '4',
+      updateDateTime:'2019/05/13 22:35:35'
     }, {
       goodsId: '6901939122846',
       goodsName: '雪菲力',
@@ -19,7 +20,8 @@ export function initState() {
       goodsCost: '0.8',
       goodsNumber: '100',
       goodsUnit: 'he',
-      goodsVariety: '4'
+      goodsVariety: '4',
+      updateDateTime:'2019/05/13 22:35:35'
     }, {
       goodsId: '6901939122846',
       goodsName: '雪菲力',
@@ -28,7 +30,8 @@ export function initState() {
       goodsCost: '0.8',
       goodsNumber: '100',
       goodsUnit: 'he',
-      goodsVariety: '4'
+      goodsVariety: '4',
+      updateDateTime:'2019/05/13 22:35:35'
     }, {
       goodsId: '6901939122846',
       goodsName: '雪菲力',
@@ -37,7 +40,8 @@ export function initState() {
       goodsCost: '0.8',
       goodsNumber: '100',
       goodsUnit: 'he',
-      goodsVariety: '4'
+      goodsVariety: '4',
+      updateDateTime:'2019/05/13 22:35:35'
     }],
     unitOption: [{
       label: '盒',
