@@ -98,6 +98,8 @@ export function initState() {
     }, {
       label: '其他类',
       value: '0'
-    }]
+    }],
+    total:0
+
   }
 }

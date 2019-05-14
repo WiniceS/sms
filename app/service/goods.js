@@ -1,9 +1,38 @@
 'use strict';
 const egg = require('egg');
 module.exports = class LoginService extends egg.Service {
-  // 获取商品信息
-  async getGood(goodId) {
-    console.log(goodId)
+  // 通过商品ID获取商品信息
+  async getGoodById(goodId) {
+    const id = goodId
+    const goodInfo = await this.app.mysql.select('tb_goods', {
+      where: {
+        good_id: id,
+        logout_flag: '0'
+      },
+      columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost']
+    })
+    const goodNumber = await this.app.mysql.select('tb_inventory', {
+      where: {
+        good_id: id,
+        logout_flag: '0'
+      },
+      columns: ['good_number']
+    })
+    let good = {}
+    if (goodInfo.length > 0) {
+      good = goodInfo[0]
+      if (goodNumber.length > 0) {
+        Object.assign(good, goodNumber[0])
+      }
+    }
+
+    return {
+      good
+    }
+  }
+  
+  // 获取商品信息，包含分页
+  async getGoodById(goodId, pageSize, currentSize) {
     const id = goodId
     const goodInfo = await this.app.mysql.select('tb_goods', {
       where: {
@@ -110,5 +139,9 @@ module.exports = class LoginService extends egg.Service {
     return {
       result
     }
+  }
+  // 获取所有商品
+  async getAllGood() {
+    return ''
   }
 };

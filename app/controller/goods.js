@@ -9,10 +9,18 @@ module.exports = class GoodsController extends egg.Controller {
   async list(ctx) {
     this.ctx.body = await ctx.service.article.getArtilceList(ctx.request.body);
   }
-  async getGoodInfo(ctx){
+  async getGoodInfoById(ctx) {
     const {
       id
     } = ctx.params;
-    this.ctx.body=await ctx.service.goods.getGood(id)
+    this.ctx.body = await ctx.service.goods.getGoodById(id)
+  }
+  async getGoodInfo(ctx) {
+    const {
+      id,
+      pageSize,
+      currentSize
+    } = ctx.params;
+    this.ctx.body = await ctx.service.goods.getGood(id, pageSize, currentSize)
   }
 };

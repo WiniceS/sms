@@ -1,21 +1,16 @@
 import * as types from './types'
 const mutations = {
-  [types.SET_DEAL_LIST](state, list) {
-    state.goodsDealList = list
+  [types.SET_GOODS_INPUT_LIST](state, list) {
+    state.goodsInputData = list
   },
-  [types.ADD_DEAL_LIST](state, good) {
-    state.goodsDealList.push(good)
+  [types.CLEAR_SET_GOOD_INFO](state) {
+    state.goodInfo = {}
   },
-  [types.DEL_DEAL_LIST](state, id) {
-    state.goodsDealList = state.goodsDealList.filter(e => {
-      return e.goodsId !== id
-    })
-  },
-  [types.CLEAR_DEAL_LIST](state) {
-    state.goodsDealList = []
-  },
-  [types.SET_GOODINFO](state, info) {
+  [types.SET_GOOD_INFO](state, info) {
     state.goodInfo = info
+  },
+  [types.SET_TOTAL](state, total) {
+    state.total = total
   }
 }
 

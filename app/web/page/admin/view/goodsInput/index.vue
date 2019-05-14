@@ -5,7 +5,7 @@
         <el-input v-model="goodsInputForm.goodsId" placeholder="请输入商品编号"></el-input>
       </el-col>
       <el-col :span="2">
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="getGoodInfo">查询</el-button>
       </el-col>
       <el-col :span="4" :offset="2">
         <el-button type="primary" @click="dialogVisible = true">查看入库记录</el-button>
@@ -227,12 +227,32 @@ export default {
   },
   computed: {
     ...mapState(["winHeight"]),
-    ...mapState("goodsInput", ["goodsInputData", "varietyOption", "unitOption"])
+    ...mapState("goodsInput", [
+      "goodsInputData",
+      "varietyOption",
+      "unitOption",
+      "goodInfo"
+    ])
   },
   methods: {
-    ...mapActions("goodsInput", ["getGoodInfo"]),
+    ...mapActions("goodsInput", ["getGoodInfoById", "getGoodInfo"]),
+    // 获取商品信息
+    getGoodInfo() {
+      const re = /^[0-9]{13}$/;
+      let tmp = this.goodsInputForm.goodsId.search(re);
+      if (tmp > -1) {
+        this.getGoodInfoById({ id: this.goodsInputForm.goodsId }).then(() => {
+          this.goodsInputForm.goodsName = this.goodInfo.goodsName;
+        });
+      } else {
+        this.$message({
+          type: "warning",
+          message: "输入的商品编号不正确"
+        });
+      }
+    },
     submitForm() {
-      this.getGoodInfo({ id: this.goodsInputForm.goodsId });
+      this.getGoodInfoById({ id: this.goodsInputForm.goodsId });
       // this.$refs[formName].validate((valid) => {
       //   if (valid) {
       //     alert('submit!')

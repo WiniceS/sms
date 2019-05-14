@@ -5,12 +5,29 @@ module.exports = app => {
     controller
   } = app;
   router.get('/', controller.admin.home);
-  router.get('/login', controller.admin.home);
-  router.post('/login/api/login', controller.login.login);
   router.post('/admin/api/article/list', controller.admin.list);
   router.post('/admin/api/article/add', controller.admin.add);
   router.get('/admin/api/article/del/:id', controller.admin.del);
   router.get('/admin/api/article/:id', controller.admin.detail);
-  router.get('/admin/api/goods/getGoodsInfo/:id', controller.goods.getGoodInfo);
   router.get('/admin(/.+)?', controller.admin.home);
+};
+
+// 登录模块的路由
+module.exports = app => {
+  const {
+    router,
+    controller
+  } = app;
+  router.get('/login', controller.admin.home);
+  router.post('/login/api/login', controller.login.login);
+};
+
+// 商品模块的路由
+module.exports = app => {
+  const {
+    router,
+    controller
+  } = app;
+  router.get('/admin/api/goods/getGoodInfoById/:id', controller.goods.getGoodInfoById);
+  router.get('/admin/api/goods/getGoodInfo/:id/:pageSize/:currentSize', controller.goods.getGoodInfo);
 };
