@@ -4,60 +4,51 @@ module.exports = class LoginService extends egg.Service {
   // 通过商品ID获取商品信息
   async getGoodById(goodId) {
     const id = goodId
-    const goodInfo = await this.app.mysql.select('tb_goods', {
+    const goodInfo = await this.app.mysql.select('v_good_info', {
       where: {
         good_id: id,
         logout_flag: '0'
       },
-      columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost']
+      columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'good_number']
     })
-    const goodNumber = await this.app.mysql.select('tb_inventory', {
-      where: {
-        good_id: id,
-        logout_flag: '0'
-      },
-      columns: ['good_number']
-    })
-    let good = {}
-    if (goodInfo.length > 0) {
-      good = goodInfo[0]
-      if (goodNumber.length > 0) {
-        Object.assign(good, goodNumber[0])
-      }
-    }
-
     return {
-      good
+      goodInfo
     }
   }
-  
+
   // 获取商品信息，包含分页
   async getGoodById(goodId, pageSize, currentSize) {
     const id = goodId
-    const goodInfo = await this.app.mysql.select('tb_goods', {
-      where: {
-        good_id: id,
-        logout_flag: '0'
-      },
-      columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost']
-    })
-    const goodNumber = await this.app.mysql.select('tb_inventory', {
-      where: {
-        good_id: id,
-        logout_flag: '0'
-      },
-      columns: ['good_number']
-    })
-    let good = {}
-    if (goodInfo.length > 0) {
-      good = goodInfo[0]
-      if (goodNumber.length > 0) {
-        Object.assign(good, goodNumber[0])
-      }
+    let goodInfo = []
+    if (id === "" || id === null) {
+      goodInfo = await this.app.mysql.select('v_good_info', {
+        where: {
+          logout_flag: '0'
+        },
+        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number'],
+        orders: [
+          ['update_time', 'desc']
+        ], // 排序方式
+        limit: pageSize, // 返回数据量
+        offset: pageSize * (currentSize - 1) // 数据偏移量
+      })
+    } else {
+      goodInfo = await this.app.mysql.select('v_good_info', {
+        where: {
+          good_id: id,
+          logout_flag: '0'
+        },
+        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number'],
+        orders: [
+          ['update_time', 'desc']
+        ], // 排序方式
+        limit: pageSize, // 返回数据量
+        offset: pageSize * (currentSize - 1) // 数据偏移量
+      })
     }
 
     return {
-      good
+      goodInfo
     }
   }
   // 添加商品
