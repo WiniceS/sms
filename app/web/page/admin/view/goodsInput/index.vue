@@ -8,7 +8,7 @@
         <el-button type="primary" @click="getGoodInfo">查询</el-button>
       </el-col>
       <el-col :span="4" :offset="2">
-        <el-button type="primary" @click="dialogVisible = true">查看入库记录</el-button>
+        <el-button type="primary" @click="open">查看入库记录</el-button>
       </el-col>
     </el-row>
     <el-row class="goods-input-form" :style="{height:(winHeight-120)+'px'}">
@@ -328,6 +328,13 @@ export default {
         goodsCost: 0,
         goodsNumber: 0
       };
+    },
+    // 打开入库详情页面
+    open() {
+      this.dialogVisible = true;
+      this.setPageSize(10);
+      this.setCurrentSize(1);
+      this.getGoodInfo({ id: "" });
     },
     // 改变每页数
     handleSizeChange(size) {
