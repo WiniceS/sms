@@ -8,7 +8,7 @@
         <el-button type="primary" @click="getGoodInfo">查询</el-button>
       </el-col>
       <el-col :span="4" :offset="2">
-        <el-button type="primary" @click="open">查看入库记录</el-button>
+        <el-button type="primary" @click="dialogVisible = true">查看入库记录</el-button>
       </el-col>
     </el-row>
     <el-row class="goods-input-form" :style="{height:(winHeight-120)+'px'}">
@@ -329,6 +329,7 @@ export default {
         goodsNumber: 0
       };
     },
+<<<<<<< HEAD
     // 打开入库详情页面
     open() {
       this.dialogVisible = true;
@@ -337,6 +338,8 @@ export default {
       
       this.getGoodInfo({ id: "" });
     },
+=======
+>>>>>>> parent of a37d7ce... 添加打开商品入库查询页面时获取一遍数据
     // 改变每页数
     handleSizeChange(size) {
       this.setPageSize(size);
