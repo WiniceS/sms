@@ -131,8 +131,4 @@ module.exports = class LoginService extends egg.Service {
       result
     }
   }
-  // 获取所有商品
-  async getAllGood() {
-    return ''
-  }
 };

@@ -11,6 +11,12 @@ const mutations = {
   },
   [types.SET_TOTAL](state, total) {
     state.total = total
+  },
+  [types.SET_PAGESIZE](state, pageSize) {
+    state.pageSize = pageSize
+  },
+  [types.SET_CURRENTSIZE](state, currentSize) {
+    state.currentSize = currentSize
   }
 }
 

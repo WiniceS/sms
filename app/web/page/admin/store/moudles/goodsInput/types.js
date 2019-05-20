@@ -10,3 +10,7 @@ export const CLEAR_DEAL_LIST = 'CLEAR_DEAL_LIST'
 export const SET_GOOD_INFO = 'SET_GOOD_INFO'
 // 设置商品入库记录列表总数
 export const SET_TOTAL = 'SET_TOTAL'
+// 设置每页显示数
+export const SET_PAGESIZE = 'SET_PAGESIZE'
+// 设置当前页数
+export const SET_CURRENTSIZE = 'SET_CURRENTSIZE'

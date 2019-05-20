@@ -70,12 +70,12 @@
           ></el-input-number>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('goodsInputForm')">商品入库</el-button>
+          <el-button type="primary" @click="submitForm('goodsInputForm')">{{isNew?'商品入库':'更新商品'}}</el-button>
           <el-button
             type="warning"
             :style="{marginLeft:'50px'}"
             @click="resetForm('goodsInputForm')"
-          >重置</el-button>
+          >清空</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -161,7 +161,7 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
+          :current-page="currentSize"
           :style="{textAlign:'right',margin:'5px 0'}"
           :page-sizes="[20, 40, 60, 80]"
           :page-size="pageSize"
@@ -219,10 +219,8 @@ export default {
           { required: true, message: "请输入商品数量", trigger: "blur" }
         ]
       },
-      pageSize: 20,
-      currentPage: 1,
-      total: 100,
-      dialogVisible: false
+      dialogVisible: false,
+      isNew: true
     };
   },
   computed: {
@@ -231,18 +229,42 @@ export default {
       "goodsInputData",
       "varietyOption",
       "unitOption",
-      "goodInfo"
+      "goodInfo",
+      "total",
+      "pageSize",
+      "currentSize"
     ])
   },
   methods: {
-    ...mapActions("goodsInput", ["getGoodInfoById", "getGoodInfo"]),
+    ...mapActions("goodsInput", [
+      "getGoodInfoById",
+      "getGoodInfo",
+      "delGoodById",
+      "updateGoodById",
+      "addGood"
+    ]),
+    ...maoMutaions("goodsInput", {
+      setPageSize: "SET_PAGESIZE",
+      setCurrentSize: "SET_CURRENTSIZE"
+    }),
     // 获取商品信息
     getGoodInfo() {
       const re = /^[0-9]{13}$/;
       let tmp = this.goodsInputForm.goodsId.search(re);
       if (tmp > -1) {
-        this.getGoodInfoById({ id: this.goodsInputForm.goodsId }).then(() => {
-          this.goodsInputForm.goodsName = this.goodInfo.goodsName;
+        this.getGoodInfoById({ id: this.goodsInputForm.goodsId }).then(res => {
+          if (res.length > 0) {
+            this.goodsInputForm.goodsName = res.goodsName;
+            this.goodsInputForm.goodsSpecification = res.goodsSpecification;
+            this.goodsInputForm.goodsUnit = res.goodsUnit;
+            this.goodsInputForm.goodsVariety = res.goodsVariety;
+            this.goodsInputForm.goodsSell = res.goodsSell;
+            this.goodsInputForm.goodsCost = res.goodsCost;
+            this.goodsInputForm.goodsNumber = res.goodsNumber;
+            this.isNew = false;
+          } else {
+            this.isNew = true;
+          }
         });
       } else {
         this.$message({
@@ -251,26 +273,72 @@ export default {
         });
       }
     },
+    // 提交表单
     submitForm() {
       this.getGoodInfoById({ id: this.goodsInputForm.goodsId });
-      // this.$refs[formName].validate((valid) => {
-      //   if (valid) {
-      //     alert('submit!')
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          if (this.isNew) {
+            this.addGood(this.goodsInputForm)
+              .then(() => {
+                this.$message({
+                  type: "success",
+                  message: "新增成功"
+                });
+              })
+              .catch(e => {
+                console.log(e);
+                this.$message({
+                  type: "error",
+                  message: "新增失败"
+                });
+              });
+          } else {
+            this.updateGoodById(this.goodsInputForm)
+              .then(() => {
+                this.$message({
+                  type: "success",
+                  message: "更新成功"
+                });
+              })
+              .catch(e => {
+                console.log(e);
+                this.$message({
+                  type: "error",
+                  message: "更新失败"
+                });
+              });
+          }
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
+    // 重置商品输入信息
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.goodsInputForm = {
+        goodsId: "",
+        goodsName: "",
+        goodsSpecification: "",
+        goodsUnit: "",
+        goodsVariety: "",
+        goodsSell: 0,
+        goodsCost: 0,
+        goodsNumber: 0
+      };
     },
+    // 改变每页数
     handleSizeChange(size) {
-      this.pageSize = size;
+      this.setPageSize(size);
+      this.setCurrentSize(1);
     },
+    // 改变当前页数
     handleCurrentChange(page) {
-      this.currentPage = page;
+      this.setCurrentSize(page);
     },
+    // 修改商品信息
     handleEdit(item) {
       console.log(item);
       this.goodsInputForm.goodsId = item.goodsId;
@@ -281,7 +349,9 @@ export default {
       this.goodsInputForm.goodsSell = item.goodsSell;
       this.goodsInputForm.goodsCost = item.goodsCost;
       this.goodsInputForm.goodsNumber = item.goodsNumber;
+      this.isNew = false;
     },
+    // 根据id删除商品
     handleDelete(id) {
       this.$confirm(
         "此操作会删除其商品，库存中将不再有此商品，是否继续?",
@@ -293,9 +363,14 @@ export default {
         }
       )
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
+          this.delGoodById({
+            id
+          }).catch(e => {
+            this.$message({
+              type: "error",
+              message: "删除失败"
+            });
+            console.log(e);
           });
         })
         .catch(() => {

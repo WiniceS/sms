@@ -30,4 +30,7 @@ module.exports = app => {
   } = app;
   router.get('/admin/api/goods/getGoodInfoById/:id', controller.goods.getGoodInfoById);
   router.get('/admin/api/goods/getGoodInfo/:id/:pageSize/:currentSize', controller.goods.getGoodInfo);
+  router.post('/admin/api/goods/delGoodById', controller.goods.delGoodById);
+  router.post('/admin/api/goods/updateGoodById', controller.goods.updateGoodById);
+  router.post('/admin/api/goods/addGood', controller.goods.addGood);
 };
