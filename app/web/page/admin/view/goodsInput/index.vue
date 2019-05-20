@@ -334,6 +334,7 @@ export default {
       this.dialogVisible = true;
       this.setPageSize(10);
       this.setCurrentSize(1);
+      
       this.getGoodInfo({ id: "" });
     },
     // 改变每页数
