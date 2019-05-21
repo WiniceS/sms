@@ -34,3 +34,13 @@ module.exports = app => {
   router.post('/admin/api/goods/updateGoodById', controller.goods.updateGoodById);
   router.post('/admin/api/goods/addGood', controller.goods.addGood);
 };
+
+
+// 销售模块的路由
+module.exports = app => {
+  const {
+    router,
+    controller
+  } = app;
+  router.post('/admin/api/sell/sell', controller.sell.sell);
+};

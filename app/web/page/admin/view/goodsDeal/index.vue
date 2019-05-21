@@ -2,15 +2,8 @@
   <div class="goods-deal">
     <div class="goods-deal-input">
       <div class="goods-deal-input-id">
-        <el-input
-          class="goods-deal-input-goodid"
-          v-model="input"
-          placeholder="请输入商品编号"
-        ></el-input>
-        <el-button
-          class="goods-deal-input-add"
-          type="primary"
-        >添加</el-button>
+        <el-input class="goods-deal-input-goodid" v-model="input" placeholder="请输入商品编号"></el-input>
+        <el-button class="goods-deal-input-add" type="primary" @click="addGoodInSell">添加</el-button>
       </div>
     </div>
     <el-table
@@ -29,24 +22,21 @@
         header-align="center"
         show-overflow-tooltip
         align="center"
-      >
-      </el-table-column>
+      ></el-table-column>
       <el-table-column
         prop="goodsName"
         label="商品名称"
         header-align="center"
         show-overflow-tooltip
         align="center"
-      >
-      </el-table-column>
+      ></el-table-column>
       <el-table-column
         prop="goodsSpecification"
         label="商品规格"
         header-align="center"
         show-overflow-tooltip
         align="center"
-      >
-      </el-table-column>
+      ></el-table-column>
       <el-table-column
         prop="goodsSell"
         label="商品售价"
@@ -54,8 +44,7 @@
         show-overflow-tooltip
         align="center"
         min-width="80"
-      >
-      </el-table-column>
+      ></el-table-column>
       <el-table-column
         prop="goodsSellNumber"
         label="商品数量"
@@ -63,8 +52,7 @@
         show-overflow-tooltip
         min-width="80"
         align="center"
-      >
-      </el-table-column>
+      ></el-table-column>
       <el-table-column
         prop="subtotal"
         label="小计"
@@ -72,8 +60,7 @@
         show-overflow-tooltip
         min-width="100"
         align="center"
-      >
-      </el-table-column>
+      ></el-table-column>
       <el-table-column
         label="操作"
         header-align="center"
@@ -82,136 +69,139 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            title="数量减1"
-            @click="minusDealList(scope.row.goodsId)"
-          >-</el-button>
-          <el-button
-            size="mini"
-            title="数量加1"
-            @click="plusDealList(scope.row.goodsId)"
-          >+</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="delDealList(scope.row.goodsId)"
-          >删除</el-button>
+          <el-button size="mini" title="数量减1" @click="minusDealList(scope.row.goodsId)">-</el-button>
+          <el-button size="mini" title="数量加1" @click="plusDealList(scope.row.goodsId)">+</el-button>
+          <el-button size="mini" type="danger" @click="delDealList(scope.row.goodsId)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="goods-deal-button">
       <div class="goods-deal-sale">
-        <el-input-number
-          v-model="sale"
-          controls-position="right"
-          :min="0" 
-          placeholder="请输入优惠金额"
-        ></el-input-number>
-        <el-button
-          type="primary"
-          :style="{marginLeft:'20px'}"
-          @click="onSaleNumber"
-        >添加优惠</el-button>
+        <el-input-number v-model="sale" controls-position="right" :min="0" placeholder="请输入优惠金额"></el-input-number>
+        <el-button type="primary" :style="{marginLeft:'20px'}" @click="onSaleNumber">添加优惠</el-button>
       </div>
       <div>
-        <el-button
-          type="warning"
-          @click="clearDeal"
-        >清空</el-button>
-        <el-button
-          type="primary"
-          :style="{width:'150px'}"
-          @click="settleAccounts"
-        >确认</el-button>
+        <el-button type="warning" @click="clearDeal">清空</el-button>
+        <el-button type="primary" :style="{width:'150px'}" @click="settleAccounts">确认</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions, mapState } from 'vuex'
+import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
 export default {
-  name: 'GoodsDeal',
-  data () {
+  name: "GoodsDeal",
+  data() {
     return {
-      input: '',
-      sale: 0,
-      dialogVisible: false
-    }
+      input: "",
+      sale: 0
+    };
   },
   computed: {
-    ...mapState('goodsDeal', []),
-    ...mapState(['winHeight']),
-    ...mapGetters('goodsDeal', ['computedDealList'])
+    ...mapState("goodsDeal", []),
+    ...mapState(["winHeight"]),
+    ...mapGetters("goodsDeal", ["computedDealList"])
   },
   methods: {
-    ...mapActions('goodsDeal', ['onSale']),
-    ...mapMutations('goodsDeal', {
-      clearDealList: 'CLEAR_DEAL_LIST',
-      delDealList: 'DEL_DEAL_LIST',
-      plusDealList: 'PLUS_DEAL_LIST',
-      minusDealList: 'MINUS_DEAL_LIST'
+    ...mapActions("goodsDeal", ["onSale", "getGoodInfoById"]),
+    ...mapMutations("goodsDeal", {
+      clearDealList: "CLEAR_DEAL_LIST",
+      delDealList: "DEL_DEAL_LIST",
+      plusDealList: "PLUS_DEAL_LIST",
+      minusDealList: "MINUS_DEAL_LIST"
     }),
     // 自定义合计栏样式
-    getSummaries (param) {
+    getSummaries(param) {
       const { columns, data } = param;
       const sums = [];
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '合计'
-          return
+          sums[index] = "合计";
+          return;
         }
         const values = data.map(item => Number(item[column.property]));
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
             const value = Number(curr);
             if (!isNaN(value)) {
-              return prev + curr
+              return prev + curr;
             } else {
-              return prev
+              return prev;
             }
           }, 0);
-          sums[index]
+          sums[index];
         } else {
-          sums[index] = ''
+          sums[index] = "";
         }
-        if (column.property === 'goodsSell') {
-          sums[index] = ''
+        if (column.property === "goodsSell") {
+          sums[index] = "";
         }
-        if (column.property === 'subtotal') {
-          sums[index] += ' 元'
+        if (column.property === "subtotal") {
+          sums[index] += " 元";
         }
-      })
-      return sums
+      });
+      return sums;
+    },
+    // 查询商品后添加到销售列表中
+    addGoodInSell() {
+      if (this.input.length > 0) {
+        const re = /^[0-9]{13}$/;
+        let tmp = this.goodsInputForm.goodsId.search(re);
+        if (tmp > -1) {
+          this.getGoodInfoById(this.input);
+        } else {
+          this.$message({
+            type: "warning",
+            message: "请输入正确的商品编码"
+          });
+        }
+      } else {
+        this.$message({
+          type: "warning",
+          message: "请输入商品编码"
+        });
+      }
     },
     // 删除一行销售商品
-    handleDelete (id) {
-      this.delDealList(id)
+    handleDelete(id) {
+      this.delDealList(id);
     },
-    onSaleNumber () {
+    onSaleNumber() {
       if (this.sale > 0) {
-        this.onSale(this.sale)
+        this.onSale(this.sale);
       }
     },
     // 清空销售列表
-    clearDeal () {
-      this.$confirm('是否清空销售列表', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.clearDealList()
-      }).catch(() => {
-        console.log('取消清空')
+    clearDeal() {
+      this.$confirm("是否清空销售列表", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
       })
+        .then(() => {
+          this.clearDealList();
+        })
+        .catch(() => {
+          console.log("取消清空");
+        });
     },
     // 结算
-    settleAccounts () {
-
+    settleAccounts() {
+      this.sell()
+        .then(() => {
+          this.input = "";
+          this.seal = 0;
+        })
+        .catch(e => {
+          this.$message({
+            type: "error",
+            message: "结算失败"
+          });
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
