@@ -5,70 +5,106 @@
         <el-input v-model="goodsInputForm.goodsId" placeholder="请输入商品编号"></el-input>
       </el-col>
       <el-col :span="2">
-        <el-button type="primary" @click="getGoodInfo">查询</el-button>
+        <el-button type="primary" @click="getGood">查询</el-button>
       </el-col>
       <el-col :span="4" :offset="2">
         <el-button type="primary" @click="open">查看入库记录</el-button>
       </el-col>
     </el-row>
     <el-row class="goods-input-form" :style="{height:(winHeight-120)+'px'}">
-      <el-form :model="goodsInputForm" :rules="rules" ref="goodsInputForm" label-width="100px">
-        <el-form-item label="商品编号" prop="goodsId">
-          <el-input v-model="goodsInputForm.goodsId" placeholder="请输入商品编号" :style="{width:'71%'}"></el-input>
-        </el-form-item>
-        <el-form-item label="商品名称" prop="goodsName">
-          <el-input v-model="goodsInputForm.goodsName" placeholder="请输入商品名称" :style="{width:'71%'}"></el-input>
-        </el-form-item>
-        <el-form-item label="商品规格" prop="goodsSpecification">
-          <el-input
-            v-model="goodsInputForm.goodsSpecification"
-            placeholder="请输入商品规格"
-            :style="{width:'71%'}"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="商品单位" prop="goodsUnit">
-          <el-select v-model="goodsInputForm.goodsUnit" placeholder="请选择单位" :style="{width:'71%'}">
-            <el-option
-              v-for="item in unitOption"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="商品品种" prop="goodsVariety">
-          <el-select
-            v-model="goodsInputForm.goodsVariety"
-            placeholder="请选择品类"
-            :style="{width:'71%'}"
-          >
-            <el-option
-              v-for="item in varietyOption"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="商品售价" prop="goodsSell">
-          <el-input v-model="goodsInputForm.goodsSell" placeholder="请输入商品售价" :style="{width:'71%'}">
-            <template slot="append">元</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item label="商品成本" prop="goodsCost">
-          <el-input v-model="goodsInputForm.goodsCost" placeholder="请输入商品成本" :style="{width:'71%'}">
-            <template slot="append">元</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item label="商品数量" prop="goodsNumber">
-          <el-input-number
-            v-model="goodsInputForm.goodsNumber"
-            placeholder="请输入商品数量"
-            :style="{width:'71%'}"
-            :min="0"
-            :max="9999"
-          ></el-input-number>
-        </el-form-item>
+      <el-form :model="goodsInputForm" :rules="rules" ref="goodsInputForm" label-width="120px">
+        <el-row class="goods-input-form-body">
+          <el-form-item label="商品编号" prop="goodsId">
+            <el-input v-model="goodsInputForm.goodsId" placeholder="请输入商品编号" :style="{width:'90%'}"></el-input>
+          </el-form-item>
+          <el-form-item label="商品名称" prop="goodsName">
+            <el-input
+              v-model="goodsInputForm.goodsName"
+              placeholder="请输入商品名称"
+              :style="{width:'90%'}"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="商品规格" prop="goodsSpecification">
+            <el-input
+              v-model="goodsInputForm.goodsSpecification"
+              placeholder="请输入商品规格"
+              :style="{width:'90%'}"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="商品单位" prop="goodsUnit">
+            <el-select
+              v-model="goodsInputForm.goodsUnit"
+              placeholder="请选择单位"
+              :style="{width:'90%'}"
+            >
+              <el-option
+                v-for="item in unitOption"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="商品品种" prop="goodsVariety">
+            <el-select
+              v-model="goodsInputForm.goodsVariety"
+              placeholder="请选择品类"
+              :style="{width:'90%'}"
+            >
+              <el-option
+                v-for="item in varietyOption"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="商品售价" prop="goodsSell">
+            <el-input
+              v-model="goodsInputForm.goodsSell"
+              placeholder="请输入商品售价"
+              :style="{width:'90%'}"
+            >
+              <template slot="append">元</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品成本" prop="goodsCost">
+            <el-input
+              v-model="goodsInputForm.goodsCost"
+              placeholder="请输入商品成本"
+              :style="{width:'90%'}"
+            >
+              <template slot="append">元</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品数量" prop="goodsNumber">
+            <el-input-number
+              v-model="goodsInputForm.goodsNumber"
+              placeholder="请输入商品数量"
+              :style="{width:'90%'}"
+              :min="0"
+              :max="9999"
+            ></el-input-number>
+          </el-form-item>
+          <el-form-item label="有无子商品" prop="havson">
+            <el-radio v-model="goodsInputForm.havson" label="0">没有子商品</el-radio>
+            <el-radio v-model="goodsInputForm.havson" label="1">有子商品</el-radio>
+          </el-form-item>
+          <el-form-item label="子商品编号" prop="sonGoodsId">
+            <el-input
+              v-model="goodsInputForm.sonGoodsId"
+              placeholder="请输入子商品编号"
+              :style="{width:'90%'}"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="关系比例" prop="ratio">
+            <el-input-number
+              v-model="goodsInputForm.ratio"
+              placeholder="请输入关系比例"
+              :style="{width:'90%'}"
+            ></el-input-number>
+          </el-form-item>
+        </el-row>
         <el-form-item>
           <el-button type="primary" @click="submitForm('goodsInputForm')">{{isNew?'商品入库':'更新商品'}}</el-button>
           <el-button
@@ -177,7 +213,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "GoodsInput",
   data() {
@@ -187,10 +223,13 @@ export default {
         goodsName: "",
         goodsSpecification: "",
         goodsUnit: "",
+        havson: "0",
         goodsVariety: "",
+        sonGoodsId: "",
         goodsSell: 0,
         goodsCost: 0,
-        goodsNumber: 0
+        goodsNumber: 0,
+        ratio: 0
       },
       rules: {
         goodsId: [
@@ -217,7 +256,12 @@ export default {
         ],
         goodsNumber: [
           { required: true, message: "请输入商品数量", trigger: "blur" }
-        ]
+        ],
+        havson: [{ required: true, message: "请确认关系", trigger: "blur" }],
+        sonGoodsId: [
+          { required: true, message: "请输入子商品编号", trigger: "blur" }
+        ],
+        ratio: [{ required: true, message: "请输入关系比例", trigger: "blur" }]
       },
       dialogVisible: false,
       isNew: true
@@ -243,12 +287,12 @@ export default {
       "updateGoodById",
       "addGood"
     ]),
-    ...maoMutaions("goodsInput", {
+    ...mapMutations("goodsInput", {
       setPageSize: "SET_PAGESIZE",
       setCurrentSize: "SET_CURRENTSIZE"
     }),
     // 获取商品信息
-    getGoodInfo() {
+    getGood() {
       const re = /^[0-9]{13}$/;
       let tmp = this.goodsInputForm.goodsId.search(re);
       if (tmp > -1) {
@@ -400,6 +444,15 @@ export default {
   .goods-input-form {
     width: 100%;
     padding: 20px 10px;
+    &-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      .el-form-item {
+        width: 50%;
+      }
+    }
   }
   .goods-input-table {
     flex: auto;
