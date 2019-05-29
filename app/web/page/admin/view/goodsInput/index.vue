@@ -86,18 +86,18 @@
               :max="9999"
             ></el-input-number>
           </el-form-item>
-          <el-form-item label="有无子商品" prop="havson">
-            <el-radio v-model="goodsInputForm.havson" label="0">没有子商品</el-radio>
-            <el-radio v-model="goodsInputForm.havson" label="1">有子商品</el-radio>
+          <el-form-item label="有无父商品" prop="havfather">
+            <el-radio v-model="goodsInputForm.havfather" label="0">没有父商品</el-radio>
+            <el-radio v-model="goodsInputForm.havfather" label="1">有父商品</el-radio>
           </el-form-item>
-          <el-form-item label="子商品编号" prop="sonGoodsId">
+          <el-form-item v-if="goodsInputForm.havfather" label="父商品编号" prop="fatherGoodsId">
             <el-input
-              v-model="goodsInputForm.sonGoodsId"
+              v-model="goodsInputForm.fatherGoodsId"
               placeholder="请输入子商品编号"
               :style="{width:'90%'}"
             ></el-input>
           </el-form-item>
-          <el-form-item label="关系比例" prop="ratio">
+          <el-form-item v-if="goodsInputForm.havfather" label="关系比例" prop="ratio">
             <el-input-number
               v-model="goodsInputForm.ratio"
               placeholder="请输入关系比例"
@@ -223,9 +223,9 @@ export default {
         goodsName: "",
         goodsSpecification: "",
         goodsUnit: "",
-        havson: "0",
+        havfather: "0",
         goodsVariety: "",
-        sonGoodsId: "",
+        fatherGoodsId: "",
         goodsSell: 0,
         goodsCost: 0,
         goodsNumber: 0,
@@ -257,9 +257,9 @@ export default {
         goodsNumber: [
           { required: true, message: "请输入商品数量", trigger: "blur" }
         ],
-        havson: [{ required: true, message: "请确认关系", trigger: "blur" }],
-        sonGoodsId: [
-          { required: true, message: "请输入子商品编号", trigger: "blur" }
+        havfather: [{ required: true, message: "请确认关系", trigger: "blur" }],
+        fatherGoodsId: [
+          { required: true, message: "请输入父商品编号", trigger: "blur" }
         ],
         ratio: [{ required: true, message: "请输入关系比例", trigger: "blur" }]
       },
