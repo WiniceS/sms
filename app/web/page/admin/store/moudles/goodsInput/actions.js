@@ -10,7 +10,8 @@ export default {
       dispatch,
       state
     } = store
-    return request.get(`/admin/api/goods/getGoodInfoById/${id}`, store)
+    console.log('id',id)
+    return request.get(`/goods/api/goods/getGoodInfoById/${id}`, store)
   },
   // 获取商品信息，ID，每页数，当前页
   getGoodInfo(store, {
@@ -21,7 +22,7 @@ export default {
       dispatch,
       state
     } = store
-    return request.get(`/admin/api/goods/getGoodInfo/${id}/${state.pageSize}/${state.currentSize}`, store).then(res => {
+    return request.get(`/goods/api/goods/getGoodInfo/${id}/${state.pageSize}/${state.currentSize}`, store).then(res => {
       commit(Type.SET_TOTAL, res.total)
       commit(Type.SET_GOODS_INPUT_LIST, res.date)
     }).catch(e => {
@@ -37,7 +38,7 @@ export default {
       dispatch,
       state
     } = store
-    return request.post('/admin/api/goods/delGoodById', {
+    return request.post('/goods/api/goods/delGoodById', {
       id
     }, store).then(res => {
       this.$message({
@@ -56,7 +57,7 @@ export default {
       dispatch,
       state
     } = store
-    return request.post('/admin/api/goods/updateGoodById', goodInfo, store)
+    return request.post('/goods/api/goods/updateGoodById', goodInfo, store)
   },
   // 添加商品信息
   addGood(store, goodInfo) {
@@ -65,6 +66,6 @@ export default {
       dispatch,
       state
     } = store
-    return request.post('/admin/api/goods/addGood', goodInfo, store)
+    return request.post('/goods/api/goods/addGood', goodInfo, store)
   }
 }

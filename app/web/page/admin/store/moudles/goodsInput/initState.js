@@ -45,34 +45,34 @@ export function initState() {
     }],
     unitOption: [{
       label: '盒',
-      value: 'he'
+      value: '盒'
     }, {
       label: '瓶',
-      value: 'ping'
+      value: '瓶'
     }, {
       label: '罐',
-      value: 'guan'
+      value: '罐'
     }, {
       label: '杯',
-      value: 'bei'
+      value: '杯'
     }, {
       label: '个',
-      value: 'ge'
+      value: '个'
     }, {
       label: '包',
-      value: 'bao'
+      value: '包'
     }, {
       label: '支',
-      value: 'zhi'
+      value: '支'
     }, {
       label: '根',
-      value: 'gen'
+      value: '根'
     }, {
       label: '碗',
-      value: 'wan'
+      value: '碗'
     }, {
       label: '捆',
-      value: 'kun'
+      value: '捆'
     }],
     varietyOption: [{
       label: '烟类',

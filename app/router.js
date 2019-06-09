@@ -14,11 +14,11 @@ module.exports = app => {
   router.get('/login', controller.admin.home);
   router.post('/login/api/login', controller.login.login);
   // 商品模块的路由
-  router.get('/admin/api/goods/getGoodInfoById/:id', controller.goods.getGoodInfoById);
-  router.get('/admin/api/goods/getGoodInfo/:id/:pageSize/:currentSize', controller.goods.getGoodInfo);
-  router.post('/admin/api/goods/delGoodById', controller.goods.delGoodById);
-  router.post('/admin/api/goods/updateGoodById', controller.goods.updateGoodById);
-  router.post('/admin/api/goods/addGood', controller.goods.addGood);
+  router.get('/goods/api/goods/getGoodInfoById/:id', controller.goods.getGoodInfoById);
+  router.get('/goods/api/goods/getGoodInfo/:id/:pageSize/:currentSize', controller.goods.getGoodInfo);
+  router.post('/goods/api/goods/delGoodById', controller.goods.delGoodById);
+  router.post('/goods/api/goods/updateGoodById', controller.goods.updateGoodById);
+  router.post('/goods/api/goods/addGood', controller.goods.addGood);
   // 销售模块的路由
   router.post('/admin/api/sell/sell', controller.sell.sell);
 };

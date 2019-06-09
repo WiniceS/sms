@@ -20,19 +20,19 @@ module.exports = class GoodsController extends egg.Controller {
   // 删除商品
   async delGoodById(ctx) {
     const id = this.ctx.request.body.id
-    const result = await ctx.service.delGood(id)
+    const result = await ctx.service.goods.delGood(id)
     this.ctx.body = result
   }
   // 更新商品
   async updateGoodById(ctx) {
     const goodInfo = this.ctx.request.body
-    const result = await ctx.service.updateGood(goodInfo)
+    const result = await ctx.service.goods.updateGood(goodInfo)
     this.ctx.body = result
   }
   // 添加商品
   async addGood(ctx) {
     const goodInfo = this.ctx.request.body
-    const result = await ctx.service.addGood(goodInfo)
+    const result = await ctx.service.goods.addGood(goodInfo)
     this.ctx.body = result
   }
 };

@@ -2,7 +2,7 @@
   <div class="goods-input" :style="{height:(winHeight-70)+'px'}">
     <el-row :gutter="20" class="goods-input-header">
       <el-col :span="16">
-        <el-input v-model="goodsInputForm.goodsId" placeholder="请输入商品编号"></el-input>
+        <el-input v-model="goodsInputForm.goodId" placeholder="请输入商品编号"></el-input>
       </el-col>
       <el-col :span="2">
         <el-button type="primary" @click="getGood">查询</el-button>
@@ -14,26 +14,26 @@
     <el-row class="goods-input-form" :style="{height:(winHeight-120)+'px'}">
       <el-form :model="goodsInputForm" :rules="rules" ref="goodsInputForm" label-width="120px">
         <el-row class="goods-input-form-body">
-          <el-form-item label="商品编号" prop="goodsId">
-            <el-input v-model="goodsInputForm.goodsId" placeholder="请输入商品编号" :style="{width:'90%'}"></el-input>
+          <el-form-item label="商品编号" prop="goodId">
+            <el-input v-model="goodsInputForm.goodId" placeholder="请输入商品编号" :style="{width:'90%'}"></el-input>
           </el-form-item>
-          <el-form-item label="商品名称" prop="goodsName">
+          <el-form-item label="商品名称" prop="goodName">
             <el-input
-              v-model="goodsInputForm.goodsName"
+              v-model="goodsInputForm.goodName"
               placeholder="请输入商品名称"
               :style="{width:'90%'}"
             ></el-input>
           </el-form-item>
-          <el-form-item label="商品规格" prop="goodsSpecification">
+          <el-form-item label="商品规格" prop="goodSpecification">
             <el-input
-              v-model="goodsInputForm.goodsSpecification"
+              v-model="goodsInputForm.goodSpecification"
               placeholder="请输入商品规格"
               :style="{width:'90%'}"
             ></el-input>
           </el-form-item>
-          <el-form-item label="商品单位" prop="goodsUnit">
+          <el-form-item label="商品单位" prop="goodUnit">
             <el-select
-              v-model="goodsInputForm.goodsUnit"
+              v-model="goodsInputForm.goodUnit"
               placeholder="请选择单位"
               :style="{width:'90%'}"
             >
@@ -45,9 +45,9 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="商品品种" prop="goodsVariety">
+          <el-form-item label="商品品种" prop="goodVariety">
             <el-select
-              v-model="goodsInputForm.goodsVariety"
+              v-model="goodsInputForm.goodVariety"
               placeholder="请选择品类"
               :style="{width:'90%'}"
             >
@@ -59,27 +59,27 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="商品售价" prop="goodsSell">
+          <el-form-item label="商品售价" prop="goodSell">
             <el-input
-              v-model="goodsInputForm.goodsSell"
+              v-model="goodsInputForm.goodSell"
               placeholder="请输入商品售价"
               :style="{width:'90%'}"
             >
               <template slot="append">元</template>
             </el-input>
           </el-form-item>
-          <el-form-item label="商品成本" prop="goodsCost">
+          <el-form-item label="商品成本" prop="goodCost">
             <el-input
-              v-model="goodsInputForm.goodsCost"
+              v-model="goodsInputForm.goodCost"
               placeholder="请输入商品成本"
               :style="{width:'90%'}"
             >
               <template slot="append">元</template>
             </el-input>
           </el-form-item>
-          <el-form-item label="商品数量" prop="goodsNumber">
+          <el-form-item label="商品数量" prop="goodNumber">
             <el-input-number
-              v-model="goodsInputForm.goodsNumber"
+              v-model="goodsInputForm.goodNumber"
               placeholder="请输入商品数量"
               :style="{width:'90%'}"
               :min="0"
@@ -90,16 +90,18 @@
             <el-radio v-model="goodsInputForm.havfather" label="0">没有父商品</el-radio>
             <el-radio v-model="goodsInputForm.havfather" label="1">有父商品</el-radio>
           </el-form-item>
-          <el-form-item v-if="goodsInputForm.havfather" label="父商品编号" prop="fatherGoodsId">
+          <el-form-item label="父商品编号" >
             <el-input
               v-model="goodsInputForm.fatherGoodsId"
+              :disabled="goodsInputForm.havfather=='0'"
               placeholder="请输入子商品编号"
               :style="{width:'90%'}"
             ></el-input>
           </el-form-item>
-          <el-form-item v-if="goodsInputForm.havfather" label="关系比例" prop="ratio">
+          <el-form-item label="关系比例" >
             <el-input-number
               v-model="goodsInputForm.ratio"
+              :disabled="goodsInputForm.havfather=='0'"
               placeholder="请输入关系比例"
               :style="{width:'90%'}"
             ></el-input-number>
@@ -127,7 +129,7 @@
       <el-row class="goods-input-table">
         <el-table :data="goodsInputData" stripe :height="winHeight*0.45" border>
           <el-table-column
-            prop="goodsId"
+            prop="good_id"
             label="商品编号"
             header-align="center"
             align="center"
@@ -135,21 +137,21 @@
             min-width="150"
           ></el-table-column>
           <el-table-column
-            prop="goodsName"
+            prop="good_name"
             label="商品名称"
             align="center"
             header-align="center"
             show-overflow-tooltip
           ></el-table-column>
           <el-table-column
-            prop="goodsSpecification"
+            prop="good_specification"
             label="商品规格"
             align="center"
             header-align="center"
             show-overflow-tooltip
           ></el-table-column>
           <el-table-column
-            prop="goodsSell"
+            prop="good_sell"
             label="商品售价"
             align="center"
             header-align="center"
@@ -157,7 +159,7 @@
             width="80"
           ></el-table-column>
           <el-table-column
-            prop="goodsCost"
+            prop="good_cost"
             label="商品成本"
             align="center"
             header-align="center"
@@ -165,7 +167,7 @@
             width="80"
           ></el-table-column>
           <el-table-column
-            prop="goodsNumber"
+            prop="good_number"
             label="商品数量"
             align="center"
             header-align="center"
@@ -173,7 +175,7 @@
             width="80"
           ></el-table-column>
           <el-table-column
-            prop="updateDateTime"
+            prop="update_time"
             label="入库时间"
             align="center"
             header-align="center"
@@ -219,49 +221,44 @@ export default {
   data() {
     return {
       goodsInputForm: {
-        goodsId: "",
-        goodsName: "",
-        goodsSpecification: "",
-        goodsUnit: "",
+        goodId: "",
+        goodName: "",
+        goodSpecification: "",
+        goodUnit: "",
         havfather: "0",
-        goodsVariety: "",
+        goodVariety: "",
         fatherGoodsId: "",
-        goodsSell: 0,
-        goodsCost: 0,
-        goodsNumber: 0,
+        goodSell: 0,
+        goodCost: 0,
+        goodNumber: 0,
         ratio: 0
       },
       rules: {
-        goodsId: [
-          { required: true, message: "请输入商品编号", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+        goodId: [
+          { required: true, message: "请输入商品编号", trigger: "blur" }
         ],
-        goodsName: [
+        goodName: [
           { required: true, message: "请输入商品名称", trigger: "blur" }
         ],
-        goodsSpecification: [
+        goodSpecification: [
           { required: true, message: "请输入商品规格", trigger: "blur" }
         ],
-        goodsUnit: [
+        goodUnit: [
           { required: true, message: "请选择单位", trigger: "change" }
         ],
-        goodsVariety: [
+        goodVariety: [
           { required: true, message: "请选择品类", trigger: "change" }
         ],
-        goodsSell: [
+        goodSell: [
           { required: true, message: "请输入商品售价", trigger: "blur" }
         ],
-        goodsCost: [
+        goodCost: [
           { required: true, message: "请输入商品成本", trigger: "blur" }
         ],
-        goodsNumber: [
+        goodNumber: [
           { required: true, message: "请输入商品数量", trigger: "blur" }
         ],
-        havfather: [{ required: true, message: "请确认关系", trigger: "blur" }],
-        fatherGoodsId: [
-          { required: true, message: "请输入父商品编号", trigger: "blur" }
-        ],
-        ratio: [{ required: true, message: "请输入关系比例", trigger: "blur" }]
+        havfather: [{ required: true, message: "请确认关系", trigger: "blur" }]
       },
       dialogVisible: false,
       isNew: true
@@ -294,17 +291,17 @@ export default {
     // 获取商品信息
     getGood() {
       const re = /^[0-9]{13}$/;
-      let tmp = this.goodsInputForm.goodsId.search(re);
+      let tmp = this.goodsInputForm.goodId.search(re);
       if (tmp > -1) {
-        this.getGoodInfoById({ id: this.goodsInputForm.goodsId }).then(res => {
+        this.getGoodInfoById({ id: this.goodsInputForm.goodId }).then(res => {
           if (res.length > 0) {
-            this.goodsInputForm.goodsName = res.goodsName;
-            this.goodsInputForm.goodsSpecification = res.goodsSpecification;
-            this.goodsInputForm.goodsUnit = res.goodsUnit;
-            this.goodsInputForm.goodsVariety = res.goodsVariety;
-            this.goodsInputForm.goodsSell = res.goodsSell;
-            this.goodsInputForm.goodsCost = res.goodsCost;
-            this.goodsInputForm.goodsNumber = res.goodsNumber;
+            this.goodsInputForm.goodName = res.good_name;
+            this.goodsInputForm.goodSpecification = res.good_specification;
+            this.goodsInputForm.goodUnit = res.good_unit;
+            this.goodsInputForm.goodVariety = res.good_variety;
+            this.goodsInputForm.goodSell = res.good_sell;
+            this.goodsInputForm.goodCost = res.good_cost;
+            this.goodsInputForm.goodNumber = res.good_number;
             this.isNew = false;
           } else {
             this.isNew = true;
@@ -319,8 +316,8 @@ export default {
     },
     // 提交表单
     submitForm() {
-      this.getGoodInfoById({ id: this.goodsInputForm.goodsId });
-      this.$refs[formName].validate(valid => {
+      // this.getGoodInfoById({ id: this.goodsInputForm.goodsId });
+      this.$refs['goodsInputForm'].validate(valid => {
         if (valid) {
           if (this.isNew) {
             this.addGood(this.goodsInputForm)
@@ -363,14 +360,17 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.goodsInputForm = {
-        goodsId: "",
-        goodsName: "",
-        goodsSpecification: "",
-        goodsUnit: "",
-        goodsVariety: "",
-        goodsSell: 0,
-        goodsCost: 0,
-        goodsNumber: 0
+        goodId: "",
+        goodName: "",
+        goodSpecification: "",
+        goodUnit: "",
+        goodVariety: "",
+        goodSell: 0,
+        goodCost: 0,
+        goodNumber: 0,
+        havfather:'0',
+        fatherGoodsId:"",
+        ratio:0
       };
     },
     // 打开入库详情页面
@@ -392,14 +392,17 @@ export default {
     // 修改商品信息
     handleEdit(item) {
       console.log(item);
-      this.goodsInputForm.goodsId = item.goodsId;
-      this.goodsInputForm.goodsName = item.goodsName;
-      this.goodsInputForm.goodsSpecification = item.goodsSpecification;
-      this.goodsInputForm.goodsUnit = item.goodsUnit;
-      this.goodsInputForm.goodsVariety = item.goodsVariety;
-      this.goodsInputForm.goodsSell = item.goodsSell;
-      this.goodsInputForm.goodsCost = item.goodsCost;
-      this.goodsInputForm.goodsNumber = item.goodsNumber;
+      this.goodsInputForm.goodId = item.goodId;
+      this.goodsInputForm.goodName = item.goodName;
+      this.goodsInputForm.goodSpecification = item.goodSpecification;
+      this.goodsInputForm.goodUnit = item.goodUnit;
+      this.goodsInputForm.goodVariety = item.goodVariety;
+      this.goodsInputForm.goodSell = item.goodSell;
+      this.goodsInputForm.goodCost = item.goodCost;
+      this.goodsInputForm.goodNumber = item.goodNumber;
+      this.goodsInputForm.havfather=item.havfather;
+      this.goodsInputForm.fatherGoodsId=item.fatherGoodsId;
+      this.goodsInputForm.ratio=item.ratio;
       this.isNew = false;
     },
     // 根据id删除商品
@@ -439,11 +442,11 @@ export default {
 .goods-input {
   background-color: #fff;
   .goods-input-header {
-    padding: 5px 20px;
+    padding: 10px 20px;
   }
   .goods-input-form {
     width: 100%;
-    padding: 20px 10px;
+    padding: 10px 10px;
     &-body {
       display: flex;
       justify-content: space-between;
