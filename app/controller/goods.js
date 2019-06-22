@@ -14,7 +14,7 @@ module.exports = class GoodsController extends egg.Controller {
       id,
       pageSize,
       currentSize
-    } = ctx.params;
+    } = ctx.query;
     this.ctx.body = await ctx.service.goods.getGood(id, pageSize, currentSize)
   }
   // 删除商品

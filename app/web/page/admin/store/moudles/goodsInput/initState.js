@@ -2,47 +2,7 @@ export function initState() {
   return {
     goodInfo: {},
     // 商品入库记录
-    goodsInputData: [{
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100',
-      goodsUnit: 'he',
-      goodsVariety: '4',
-      updateDateTime: '2019/05/13 22:35:35'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100',
-      goodsUnit: 'he',
-      goodsVariety: '4',
-      updateDateTime: '2019/05/13 22:35:35'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100',
-      goodsUnit: 'he',
-      goodsVariety: '4',
-      updateDateTime: '2019/05/13 22:35:35'
-    }, {
-      goodsId: '6901939122846',
-      goodsName: '雪菲力',
-      goodsSpecification: '250毫升',
-      goodsSell: '1',
-      goodsCost: '0.8',
-      goodsNumber: '100',
-      goodsUnit: 'he',
-      goodsVariety: '4',
-      updateDateTime: '2019/05/13 22:35:35'
-    }],
+    goodsInputData: [],
     unitOption: [{
       label: '盒',
       value: '盒'

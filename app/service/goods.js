@@ -20,35 +20,44 @@ module.exports = class LoginService extends egg.Service {
   async getGood(goodId, pageSize, currentSize) {
     const id = goodId
     let goodInfo = []
+    let total = 0
     if (id === "" || id === null) {
       goodInfo = await this.app.mysql.select('v_good_info', {
         where: {
           logout_flag: '0'
         },
-        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number'],
+        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number','havfather', 'father_good_id', 'ratio'],
         orders: [
           ['update_time', 'desc']
         ], // 排序方式
         limit: pageSize, // 返回数据量
         offset: pageSize * (currentSize - 1) // 数据偏移量
       })
+      const count = await this.app.mysql.query("select count(*) from v_good_info")
+      if (count.length > 0) {
+        total = count[0]['count(*)']
+      }
     } else {
       goodInfo = await this.app.mysql.select('v_good_info', {
         where: {
           good_id: id,
           logout_flag: '0'
         },
-        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number'],
+        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number','havfather', 'father_good_id', 'ratio'],
         orders: [
           ['update_time', 'desc']
         ], // 排序方式
         limit: pageSize, // 返回数据量
         offset: pageSize * (currentSize - 1) // 数据偏移量
       })
+      if (goodInfo.length > 0) {
+        total = 1
+      }
     }
 
     return {
-      goodInfo
+      total: total,
+      data: goodInfo
     }
   }
   // 添加商品

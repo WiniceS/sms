@@ -1,5 +1,6 @@
 import request from 'framework/network/request';
 import * as Type from './types'
+import tarnslate from 'framework/tool/translate'
 export default {
   // 通过id获取商品信息
   getGoodInfoById(store, {
@@ -10,7 +11,7 @@ export default {
       dispatch,
       state
     } = store
-    console.log('id',id)
+    console.log('id', id)
     return request.get(`/goods/api/goods/getGoodInfoById/${id}`, store)
   },
   // 获取商品信息，ID，每页数，当前页
@@ -22,9 +23,13 @@ export default {
       dispatch,
       state
     } = store
-    return request.get(`/goods/api/goods/getGoodInfo/${id}/${state.pageSize}/${state.currentSize}`, store).then(res => {
-      commit(Type.SET_TOTAL, res.total)
-      commit(Type.SET_GOODS_INPUT_LIST, res.date)
+    return request.get(`/goods/api/goods/getGoodInfo?id=${id}&pageSize=${state.pageSize}&currentSize=${state.currentSize}`, store).then(res => {
+      commit(Type.SET_TOTAL, res.data.total)
+      let list = res.data.data.map(item => {
+        item.update_time = tarnslate.tarnslateDate(item.update_time, true)
+        return item
+      })
+      commit(Type.SET_GOODS_INPUT_LIST, list)
     }).catch(e => {
       console.log(e)
     })
