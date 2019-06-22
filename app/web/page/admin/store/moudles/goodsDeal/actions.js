@@ -1,5 +1,8 @@
 import * as types from './types'
 import request from 'framework/network/request';
+import {
+  Message
+} from 'element-ui';
 export default {
   onSale({
     state,
@@ -22,11 +25,20 @@ export default {
       dispatch,
       state
     } = store
-    return request.get(`/admin/api/goods/getGoodInfoById/${id}`, store).then(res => {
-      if (res > 0) {
-        commit('ADD_DEAL_LIST', res[0])
+    return request.get(`/goods/api/goods/getGoodInfoById/${id}`, store).then(res => {
+      let goodInfo = res.data.goodInfo
+      if (goodInfo.length > 0) {
+        let alreadyHad = state.goodsDealList.some(item => item.good_id === id)
+        if (alreadyHad) {
+          commit('PLUS_DEAL_LIST', id)
+        } else {
+          let good = goodInfo[0]
+          good.good_sell_number = 1
+          good.discounts = 0
+          commit('ADD_DEAL_LIST', good)
+        }
       } else {
-        this.$message({
+        Message({
           type: 'error',
           $message: '没有找到此商品，请前往商品入库页面添加'
         })
@@ -40,7 +52,7 @@ export default {
       dispatch,
       state
     } = store
-    return request.post('/admin/api/sell/sell', store.goodsDealList, store).then(res => {
+    return request.post('/sell/api/sell', store.goodsDealList, store).then(res => {
       commit('CLEAR_DEAL_LIST')
     })
   }

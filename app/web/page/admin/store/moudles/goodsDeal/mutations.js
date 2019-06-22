@@ -8,24 +8,36 @@ const mutations = {
   },
   [types.DEL_DEAL_LIST](state, id) {
     state.goodsDealList = state.goodsDealList.filter(e => {
-      return e.goodsId !== id
+      return e.good_id !== id
     })
   },
   [types.PLUS_DEAL_LIST](state, id) {
     state.goodsDealList = state.goodsDealList.map(e => {
-      if (e.goodsId === id) {
-        e.goodsSellNumber++
+      if (e.good_id === id) {
+        e.good_sell_number++
       }
       return e
     })
   },
   [types.MINUS_DEAL_LIST](state, id) {
     state.goodsDealList = state.goodsDealList.map(e => {
-      if (e.goodsId === id) {
-        e.goodsSellNumber--
+      if (e.good_id === id) {
+        e.good_sell_number--
       }
       return e
-    }).filter(f => f.goodsSellNumber > 0)
+    }).filter(f => f.good_sell_number > 0)
+  },
+  [types.MODIFY_DISCOUNTS](state, {
+    value,
+    id
+  }) {
+    console.log(value, id)
+    state.goodsDealList = state.goodsDealList.map(e => {
+      if (e.good_id === id) {
+        e.discoonts = value
+      }
+      return e
+    })
   },
   [types.CLEAR_DEAL_LIST](state) {
     state.goodsDealList = []

@@ -10,3 +10,5 @@ export const CLEAR_DEAL_LIST = 'CLEAR_DEAL_LIST'
 export const PLUS_DEAL_LIST = 'PLUS_DEAL_LIST'
 // 减少商品数量
 export const MINUS_DEAL_LIST = 'MINUS_DEAL_LIST'
+// 修改优惠金额
+export const MODIFY_DISCOUNTS = 'MODIFY_DISCOUNTS'

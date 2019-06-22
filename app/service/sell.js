@@ -23,7 +23,7 @@ module.exports = class LoginService extends egg.Service {
         }
         const result = await app.mysql.beginTransactionScope(async conn => {
             await conn.update('tb_good', row1, options)
-            await conn.update('tbtb_inventory', row2, options)
+            await conn.update('tb_inventory', row2, options)
             return {
                 success: true
             }

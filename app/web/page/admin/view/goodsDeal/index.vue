@@ -2,8 +2,16 @@
   <div class="goods-deal">
     <div class="goods-deal-input">
       <div class="goods-deal-input-id">
-        <el-input class="goods-deal-input-goodid" v-model="input" placeholder="请输入商品编号"></el-input>
-        <el-button class="goods-deal-input-add" type="primary" @click="addGoodInSell">添加</el-button>
+        <el-input
+          class="goods-deal-input-goodid"
+          v-model="goodId"
+          placeholder="请输入商品编号"
+        ></el-input>
+        <el-button
+          class="goods-deal-input-add"
+          type="primary"
+          @click="addGoodInSell"
+        >添加</el-button>
       </div>
     </div>
     <el-table
@@ -17,48 +25,69 @@
       border
     >
       <el-table-column
-        prop="goodsId"
+        prop="good_id"
         label="商品编号"
         header-align="center"
         show-overflow-tooltip
         align="center"
       ></el-table-column>
       <el-table-column
-        prop="goodsName"
+        prop="good_name"
         label="商品名称"
         header-align="center"
         show-overflow-tooltip
         align="center"
       ></el-table-column>
       <el-table-column
-        prop="goodsSpecification"
+        prop="good_specification"
         label="商品规格"
         header-align="center"
         show-overflow-tooltip
         align="center"
       ></el-table-column>
       <el-table-column
-        prop="goodsSell"
+        prop="good_sell"
         label="商品售价"
         header-align="center"
         show-overflow-tooltip
         align="center"
-        min-width="80"
+        width="80"
       ></el-table-column>
       <el-table-column
-        prop="goodsSellNumber"
+        prop="good_sell_number"
         label="商品数量"
         header-align="center"
         show-overflow-tooltip
-        min-width="80"
+        width="80"
         align="center"
       ></el-table-column>
+      <el-table-column
+        prop="discounts"
+        label="优惠金额"
+        header-align="center"
+        show-overflow-tooltip
+        width="160"
+        align="center"
+      >
+        <template slot-scope="scope">
+          <el-input-number
+            size="mini"
+            :value="sale"
+            :min="0"
+            :max="scope.row.good_sell"
+            :precision="2"
+            :controls="false"
+            placeholder="请输入优惠金额"
+            @input="changeDiscounts($event,scope.row.good_id)"
+          ></el-input-number>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="subtotal"
         label="小计"
         header-align="center"
         show-overflow-tooltip
-        min-width="100"
+        width="100"
         align="center"
       ></el-table-column>
       <el-table-column
@@ -69,20 +98,48 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-button size="mini" title="数量减1" @click="minusDealList(scope.row.goodsId)">-</el-button>
-          <el-button size="mini" title="数量加1" @click="plusDealList(scope.row.goodsId)">+</el-button>
-          <el-button size="mini" type="danger" @click="delDealList(scope.row.goodsId)">删除</el-button>
+          <el-button
+            size="mini"
+            title="数量减1"
+            @click="minusDealList(scope.row.good_id)"
+          >-</el-button>
+          <el-button
+            size="mini"
+            title="数量加1"
+            @click="plusDealList(scope.row.good_id)"
+          >+</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="delDealList(scope.row.good_id)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="goods-deal-button">
       <div class="goods-deal-sale">
-        <el-input-number v-model="sale" controls-position="right" :min="0" placeholder="请输入优惠金额"></el-input-number>
-        <el-button type="primary" :style="{marginLeft:'20px'}" @click="onSaleNumber">添加优惠</el-button>
+        <el-input-number
+          v-model="sale"
+          controls-position="right"
+          :min="0"
+          placeholder="请输入优惠金额"
+        ></el-input-number>
+        <el-button
+          type="primary"
+          :style="{marginLeft:'20px'}"
+          @click="onSaleNumber"
+        >添加优惠</el-button>
       </div>
       <div>
-        <el-button type="warning" @click="clearDeal">清空</el-button>
-        <el-button type="primary" :style="{width:'150px'}" @click="settleAccounts">确认</el-button>
+        <el-button
+          type="warning"
+          @click="clearDeal"
+        >清空</el-button>
+        <el-button
+          type="primary"
+          :style="{width:'150px'}"
+          @click="settleAccounts"
+        >确认</el-button>
       </div>
     </div>
   </div>
@@ -92,9 +149,9 @@
 import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
 export default {
   name: "GoodsDeal",
-  data() {
+  data () {
     return {
-      input: "",
+      goodId: "",
       sale: 0
     };
   },
@@ -109,10 +166,11 @@ export default {
       clearDealList: "CLEAR_DEAL_LIST",
       delDealList: "DEL_DEAL_LIST",
       plusDealList: "PLUS_DEAL_LIST",
-      minusDealList: "MINUS_DEAL_LIST"
+      minusDealList: "MINUS_DEAL_LIST",
+      modifyDiscounts: "MODIFY_DISCOUNTS"
     }),
     // 自定义合计栏样式
-    getSummaries(param) {
+    getSummaries (param) {
       const { columns, data } = param;
       const sums = [];
       columns.forEach((column, index) => {
@@ -144,12 +202,12 @@ export default {
       return sums;
     },
     // 查询商品后添加到销售列表中
-    addGoodInSell() {
-      if (this.input.length > 0) {
+    addGoodInSell () {
+      if (this.goodId.length > 0) {
         const re = /^[0-9]{13}$/;
-        let tmp = this.goodsInputForm.goodsId.search(re);
+        let tmp = this.goodId.search(re);
         if (tmp > -1) {
-          this.getGoodInfoById(this.input);
+          this.getGoodInfoById(this.goodId);
         } else {
           this.$message({
             type: "warning",
@@ -163,17 +221,23 @@ export default {
         });
       }
     },
+    changeDiscounts (value, id) {
+      this.$nextTick(() => {
+        this.modifyDiscounts({ value, id })
+        console.log(value, id)
+      })
+    },
     // 删除一行销售商品
-    handleDelete(id) {
+    handleDelete (id) {
       this.delDealList(id);
     },
-    onSaleNumber() {
+    onSaleNumber () {
       if (this.sale > 0) {
         this.onSale(this.sale);
       }
     },
     // 清空销售列表
-    clearDeal() {
+    clearDeal () {
       this.$confirm("是否清空销售列表", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -187,10 +251,10 @@ export default {
         });
     },
     // 结算
-    settleAccounts() {
+    settleAccounts () {
       this.sell()
         .then(() => {
-          this.input = "";
+          this.goodId = "";
           this.seal = 0;
         })
         .catch(e => {
