@@ -94,7 +94,7 @@
         label="操作"
         header-align="center"
         show-overflow-tooltip
-        min-width="180"
+        width="180"
         align="center"
       >
         <template slot-scope="scope">
@@ -117,20 +117,6 @@
       </el-table-column>
     </el-table>
     <div class="goods-deal-button">
-      <div class="goods-deal-sale">
-        <el-input-number
-          v-model="sale"
-          controls-position="right"
-          :min="0"
-          placeholder="请输入优惠金额"
-        ></el-input-number>
-        <el-button
-          type="primary"
-          :style="{marginLeft:'20px'}"
-          @click="onSaleNumber"
-        >添加优惠</el-button>
-      </div>
-      <div>
         <el-button
           type="warning"
           @click="clearDeal"
@@ -141,7 +127,6 @@
           @click="settleAccounts"
         >确认</el-button>
       </div>
-    </div>
   </div>
 </template>
 
@@ -224,7 +209,6 @@ export default {
     changeDiscounts (value, id) {
       this.$nextTick(() => {
         this.modifyDiscounts({ value, id })
-        console.log(value, id)
       })
     },
     // 删除一行销售商品
@@ -255,7 +239,6 @@ export default {
       this.sell()
         .then(() => {
           this.goodId = "";
-          this.seal = 0;
         })
         .catch(e => {
           this.$message({
@@ -290,7 +273,7 @@ export default {
   .goods-deal-button {
     height: 50px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
   }
   .goods-deal-sale {

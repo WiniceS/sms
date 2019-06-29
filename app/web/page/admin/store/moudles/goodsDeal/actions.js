@@ -35,6 +35,7 @@ export default {
           let good = goodInfo[0]
           good.good_sell_number = 1
           good.discounts = 0
+          good.sell_date=new Date()
           commit('ADD_DEAL_LIST', good)
         }
       } else {

@@ -31,10 +31,9 @@ const mutations = {
     value,
     id
   }) {
-    console.log(value, id)
     state.goodsDealList = state.goodsDealList.map(e => {
       if (e.good_id === id) {
-        e.discoonts = value
+        e.discounts = value
       }
       return e
     })
