@@ -1,6 +1,6 @@
 'use strict';
 const egg = require('egg');
-module.exports = class LoginService extends egg.Service {
+module.exports = class GoodService extends egg.Service {
   // 通过商品ID获取商品信息
   async getGoodById(goodId) {
     const id = goodId
@@ -26,7 +26,7 @@ module.exports = class LoginService extends egg.Service {
         where: {
           logout_flag: '0'
         },
-        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number','havfather', 'father_good_id', 'ratio'],
+        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number', 'havfather', 'father_good_id', 'ratio'],
         orders: [
           ['update_time', 'desc']
         ], // 排序方式
@@ -43,7 +43,7 @@ module.exports = class LoginService extends egg.Service {
           good_id: id,
           logout_flag: '0'
         },
-        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number','havfather', 'father_good_id', 'ratio'],
+        columns: ['good_id', 'good_name', 'good_specification', 'good_unit', 'good_variety', 'good_sell', 'good_cost', 'update_time', 'good_number', 'havfather', 'father_good_id', 'ratio'],
         orders: [
           ['update_time', 'desc']
         ], // 排序方式
@@ -108,13 +108,21 @@ module.exports = class LoginService extends egg.Service {
       havfather: good.havfather,
       update_time: this.app.mysql.literals.now
     }
-    const row2 = {
+    const second = {
       good_number: good.goodNumber,
       update_time: this.app.mysql.literals.now
     }
     const row3 = {
-      father_good_id: good.father_good_id,
+      father_good_id: good.fatherGoodId,
       ratio: good.ratio,
+      logout_flag: '0',
+      update_time: this.app.mysql.literals.now
+    }
+    const row4 = {
+      father_good_id: good.fatherGoodId,
+      son_good_id: good.goodId,
+      ratio: good.ratio,
+      logout_flag: '0',
       update_time: this.app.mysql.literals.now
     }
     const options = {
@@ -124,14 +132,31 @@ module.exports = class LoginService extends egg.Service {
     }
     const options2 = {
       where: {
+        good_id: good.goodId
+      }
+    }
+    const options3 = {
+      where: {
         son_good_id: good.goodId
       }
     }
     const result = await this.app.mysql.beginTransactionScope(async conn => {
-      await conn.update('tb_good', row1, options)
-      await conn.update('tb_inventory', row2, options)
+      await conn.update('tb_goods', row1, options)
+      await conn.update('tb_inventory', second, options2)
       if (good.havfather === "1") {
-        await conn.update('tb_relevancy', row3, options2)
+        const record = await conn.get('tb_relevancy', {
+          son_good_id: good.goodId
+        })
+        if (record != null && record.length > 0) {
+          await conn.update('tb_relevancy', row3, options3)
+        } else {
+          await conn.insert('tb_relevancy', row4)
+        }
+      } else {
+        await conn.update('tb_relevancy', {
+          logout_flag: '1',
+          logout_time: this.app.mysql.literals.now
+        }, options3)
       }
       return {
         success: true

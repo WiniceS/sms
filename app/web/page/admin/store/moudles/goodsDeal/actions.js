@@ -53,7 +53,7 @@ export default {
       dispatch,
       state
     } = store
-    return request.post('/sell/api/sell', store.goodsDealList, store).then(res => {
+    return request.post('/sell/api/sell', state.goodsDealList, store).then(res => {
       commit('CLEAR_DEAL_LIST')
     })
   }

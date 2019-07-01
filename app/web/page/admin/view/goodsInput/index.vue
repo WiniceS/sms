@@ -1,84 +1,38 @@
 <template>
-  <div
-    class="goods-input"
-    :style="{height:(winHeight-70)+'px'}"
-  >
-    <el-row
-      :gutter="20"
-      class="goods-input-header"
-    >
+  <div class="goods-input" :style="{height:(winHeight-70)+'px'}">
+    <el-row :gutter="20" class="goods-input-header">
       <el-col :span="16">
-        <el-input
-          v-model="goodsInputForm.goodId"
-          placeholder="请输入商品编号"
-        ></el-input>
+        <el-input v-model="goodsInputForm.goodId" placeholder="请输入商品编号"></el-input>
       </el-col>
       <el-col :span="2">
-        <el-button
-          type="primary"
-          @click="getGood"
-        >查询</el-button>
+        <el-button type="primary" @click="getGood">查询</el-button>
       </el-col>
-      <el-col
-        :span="4"
-        :offset="2"
-      >
-        <el-button
-          type="primary"
-          @click="open"
-        >查看入库记录</el-button>
+      <el-col :span="4" :offset="2">
+        <el-button type="primary" @click="open">查看入库记录</el-button>
       </el-col>
     </el-row>
-    <el-row
-      class="goods-input-form"
-      :style="{height:(winHeight-120)+'px'}"
-    >
-      <el-form
-        :model="goodsInputForm"
-        :rules="rules"
-        ref="goodsInputForm"
-        label-width="120px"
-      >
+    <el-row class="goods-input-form" :style="{height:(winHeight-120)+'px'}">
+      <el-form :model="goodsInputForm" :rules="rules" ref="goodsInputForm" label-width="120px">
         <el-row class="goods-input-form-body">
-          <el-form-item
-            label="商品编号"
-            prop="goodId"
-          >
-            <el-input
-              v-model="goodsInputForm.goodId"
-              placeholder="请输入商品编号"
-              :style="{width:'90%'}"
-            ></el-input>
+          <el-form-item label="商品编号" prop="goodId">
+            <el-input v-model="goodsInputForm.goodId" placeholder="请输入商品编号" :style="{width:'90%'}"></el-input>
           </el-form-item>
-          <el-form-item
-            label="商品名称"
-            prop="goodName"
-          >
+          <el-form-item label="商品名称" prop="goodName">
             <el-input
               v-model="goodsInputForm.goodName"
               placeholder="请输入商品名称"
               :style="{width:'90%'}"
             ></el-input>
           </el-form-item>
-          <el-form-item
-            label="商品规格"
-            prop="goodSpecification"
-          >
+          <el-form-item label="商品规格" prop="goodSpecification">
             <el-input
               v-model="goodsInputForm.goodSpecification"
               placeholder="请输入商品规格"
               :style="{width:'90%'}"
             ></el-input>
           </el-form-item>
-          <el-form-item
-            label="商品单位"
-            prop="goodUnit"
-          >
-            <el-select
-              v-model="goodsInputForm.goodUnit"
-              placeholder="请选择单位"
-              :style="{width:'90%'}"
-            >
+          <el-form-item label="商品单位" prop="goodUnit">
+            <el-select v-model="goodsInputForm.goodUnit" placeholder="请选择单位" :style="{width:'90%'}">
               <el-option
                 v-for="item in unitOption"
                 :key="item.value"
@@ -87,10 +41,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item
-            label="商品品种"
-            prop="goodVariety"
-          >
+          <el-form-item label="商品品种" prop="goodVariety">
             <el-select
               v-model="goodsInputForm.goodVariety"
               placeholder="请选择品类"
@@ -104,10 +55,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item
-            label="商品售价"
-            prop="goodSell"
-          >
+          <el-form-item label="商品售价" prop="goodSell">
             <el-input
               v-model="goodsInputForm.goodSell"
               placeholder="请输入商品售价"
@@ -116,10 +64,7 @@
               <template slot="append">元</template>
             </el-input>
           </el-form-item>
-          <el-form-item
-            label="商品成本"
-            prop="goodCost"
-          >
+          <el-form-item label="商品成本" prop="goodCost">
             <el-input
               v-model="goodsInputForm.goodCost"
               placeholder="请输入商品成本"
@@ -128,10 +73,7 @@
               <template slot="append">元</template>
             </el-input>
           </el-form-item>
-          <el-form-item
-            label="商品数量"
-            prop="goodNumber"
-          >
+          <el-form-item label="商品数量" prop="goodNumber">
             <el-input-number
               v-model="goodsInputForm.goodNumber"
               placeholder="请输入商品数量"
@@ -140,18 +82,9 @@
               :max="9999"
             ></el-input-number>
           </el-form-item>
-          <el-form-item
-            label="有无父商品"
-            prop="havfather"
-          >
-            <el-radio
-              v-model="goodsInputForm.havfather"
-              label="0"
-            >没有父商品</el-radio>
-            <el-radio
-              v-model="goodsInputForm.havfather"
-              label="1"
-            >有父商品</el-radio>
+          <el-form-item label="有无父商品" prop="havfather">
+            <el-radio v-model="goodsInputForm.havfather" label="0">没有父商品</el-radio>
+            <el-radio v-model="goodsInputForm.havfather" label="1">有父商品</el-radio>
           </el-form-item>
           <el-form-item label="父商品编号">
             <el-input
@@ -171,10 +104,7 @@
           </el-form-item>
         </el-row>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="submitForm('goodsInputForm')"
-          >{{isNew?'商品入库':'更新商品'}}</el-button>
+          <el-button type="primary" @click="submitForm('goodsInputForm')">{{isNew?'商品入库':'更新商品'}}</el-button>
           <el-button
             type="warning"
             :style="{marginLeft:'50px'}"
@@ -183,37 +113,17 @@
         </el-form-item>
       </el-form>
     </el-row>
-    <el-dialog
-      title="最近添加记录"
-      :visible.sync="dialogVisible"
-      width="80%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="最近添加记录" :visible.sync="dialogVisible" width="80%" :before-close="handleClose">
       <el-row :style="{padding:'10px'}">
         <el-col :span="16">
-          <el-input
-            v-model="recordGoodId"
-            placeholder="请输入商品编号"
-          ></el-input>
+          <el-input v-model="recordGoodId" placeholder="请输入商品编号"></el-input>
         </el-col>
-        <el-col
-          :span="4"
-          :offset="2"
-        >
-          <el-button
-            type="primary"
-            :style="{width:'100%'}"
-            @click="toSearchRecord"
-          >查询</el-button>
+        <el-col :span="4" :offset="2">
+          <el-button type="primary" :style="{width:'100%'}" @click="toSearchRecord">查询</el-button>
         </el-col>
       </el-row>
       <el-row class="goods-input-table">
-        <el-table
-          :data="goodsInputData"
-          stripe
-          :height="winHeight*0.45"
-          border
-        >
+        <el-table :data="goodsInputData" stripe :height="winHeight*0.45" border>
           <el-table-column
             prop="good_id"
             label="商品编号"
@@ -277,16 +187,8 @@
             fixed="right"
           >
             <template slot-scope="scope">
-              <el-button
-                size="mini"
-                type="primay"
-                @click="handleEdit(scope.row)"
-              >修改</el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.row.goodsId)"
-              >删除</el-button>
+              <el-button size="mini" type="primay" @click="handleEdit(scope.row)">修改</el-button>
+              <el-button size="mini" type="danger" @click="handleDelete(scope.row.goodsId)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -301,10 +203,7 @@
           :total="total"
         ></el-pagination>
       </el-row>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="close">关闭</el-button>
       </span>
     </el-dialog>
@@ -315,7 +214,7 @@
 import { mapGetters, mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "GoodsInput",
-  data () {
+  data() {
     return {
       goodsInputForm: {
         goodId: "",
@@ -359,7 +258,7 @@ export default {
       },
       dialogVisible: false,
       isNew: true,
-      recordGoodId: ''
+      recordGoodId: ""
     };
   },
   computed: {
@@ -387,7 +286,7 @@ export default {
       setCurrentSize: "SET_CURRENTSIZE"
     }),
     // 获取商品信息
-    getGood () {
+    getGood() {
       const re = /^[0-9]{13}$/;
       let tmp = this.goodsInputForm.goodId.search(re);
       if (tmp > -1) {
@@ -413,13 +312,14 @@ export default {
       }
     },
     // 提交表单
-    submitForm () {
+    submitForm() {
       // this.getGoodInfoById({ id: this.goodsInputForm.goodsId });
-      this.$refs['goodsInputForm'].validate(valid => {
+      this.$refs["goodsInputForm"].validate(valid => {
         if (valid) {
           if (this.isNew) {
             this.addGood(this.goodsInputForm)
               .then(() => {
+                this.resetForm("goodsInputForm");
                 this.$message({
                   type: "success",
                   message: "新增成功"
@@ -435,6 +335,7 @@ export default {
           } else {
             this.updateGoodById(this.goodsInputForm)
               .then(() => {
+                this.resetForm("goodsInputForm");
                 this.$message({
                   type: "success",
                   message: "更新成功"
@@ -455,7 +356,8 @@ export default {
       });
     },
     // 重置商品输入信息
-    resetForm (formName) {
+    resetForm(formName) {
+      console.log("重置商品信息");
       this.$refs[formName].resetFields();
       this.goodsInputForm = {
         goodId: "",
@@ -466,46 +368,46 @@ export default {
         goodSell: 0,
         goodCost: 0,
         goodNumber: 0,
-        havfather: '0',
+        havfather: "0",
         fatherGoodId: "",
         ratio: 0
       };
       this.isNew = true;
     },
     // 打开入库详情页面
-    open () {
+    open() {
       this.dialogVisible = true;
       this.setPageSize(10);
       this.setCurrentSize(1);
       this.getGoodInfo({ id: this.recordGoodId });
     },
     // 改变每页数
-    handleSizeChange (size) {
+    handleSizeChange(size) {
       this.setPageSize(size);
       this.setCurrentSize(1);
       this.getGoodInfo({ id: this.recordGoodId });
     },
     // 改变当前页数
-    handleCurrentChange (page) {
+    handleCurrentChange(page) {
       this.setCurrentSize(page);
       this.getGoodInfo({ id: this.recordGoodId });
     },
     // 关闭弹窗
-    handleClose (done) {
-      this.recordGoodId = ''
-      done()
+    handleClose(done) {
+      this.recordGoodId = "";
+      done();
     },
     // 关闭弹窗
-    close () {
-      this.recordGoodId = ''
-      this.dialogVisible = false
+    close() {
+      this.recordGoodId = "";
+      this.dialogVisible = false;
     },
     // 弹窗查询按钮
-    toSearchRecord () {
+    toSearchRecord() {
       this.getGoodInfo({ id: this.recordGoodId });
     },
     // 修改商品信息
-    handleEdit (item) {
+    handleEdit(item) {
       this.goodsInputForm.goodId = item.good_id;
       this.goodsInputForm.goodName = item.good_name;
       this.goodsInputForm.goodSpecification = item.good_specification;
@@ -518,11 +420,11 @@ export default {
       this.goodsInputForm.fatherGoodId = item.father_good_id;
       this.goodsInputForm.ratio = item.ratio;
       this.isNew = false;
-      this.dialogVisible = false
+      this.dialogVisible = false;
     },
     // 根据id删除商品
     //TODO 还没调试过
-    handleDelete (id) {
+    handleDelete(id) {
       this.$confirm(
         "此操作会删除其商品，库存中将不再有此商品，是否继续?",
         "提示",

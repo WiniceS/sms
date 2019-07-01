@@ -2,16 +2,8 @@
   <div class="goods-deal">
     <div class="goods-deal-input">
       <div class="goods-deal-input-id">
-        <el-input
-          class="goods-deal-input-goodid"
-          v-model="goodId"
-          placeholder="请输入商品编号"
-        ></el-input>
-        <el-button
-          class="goods-deal-input-add"
-          type="primary"
-          @click="addGoodInSell"
-        >添加</el-button>
+        <el-input class="goods-deal-input-goodid" v-model="goodId" placeholder="请输入商品编号"></el-input>
+        <el-button class="goods-deal-input-add" type="primary" @click="addGoodInSell">添加</el-button>
       </div>
     </div>
     <el-table
@@ -98,35 +90,16 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            title="数量减1"
-            @click="minusDealList(scope.row.good_id)"
-          >-</el-button>
-          <el-button
-            size="mini"
-            title="数量加1"
-            @click="plusDealList(scope.row.good_id)"
-          >+</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="delDealList(scope.row.good_id)"
-          >删除</el-button>
+          <el-button size="mini" title="数量减1" @click="minusDealList(scope.row.good_id)">-</el-button>
+          <el-button size="mini" title="数量加1" @click="plusDealList(scope.row.good_id)">+</el-button>
+          <el-button size="mini" type="danger" @click="delDealList(scope.row.good_id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="goods-deal-button">
-        <el-button
-          type="warning"
-          @click="clearDeal"
-        >清空</el-button>
-        <el-button
-          type="primary"
-          :style="{width:'150px'}"
-          @click="settleAccounts"
-        >确认</el-button>
-      </div>
+      <el-button type="warning" @click="clearDeal">清空</el-button>
+      <el-button type="primary" :style="{width:'150px'}" @click="settleAccounts">确认</el-button>
+    </div>
   </div>
 </template>
 
@@ -134,7 +107,7 @@
 import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
 export default {
   name: "GoodsDeal",
-  data () {
+  data() {
     return {
       goodId: "",
       sale: 0
@@ -146,7 +119,7 @@ export default {
     ...mapGetters("goodsDeal", ["computedDealList"])
   },
   methods: {
-    ...mapActions("goodsDeal", ["onSale", "getGoodInfoById"]),
+    ...mapActions("goodsDeal", ["onSale", "getGoodInfoById","sell"]),
     ...mapMutations("goodsDeal", {
       clearDealList: "CLEAR_DEAL_LIST",
       delDealList: "DEL_DEAL_LIST",
@@ -155,7 +128,7 @@ export default {
       modifyDiscounts: "MODIFY_DISCOUNTS"
     }),
     // 自定义合计栏样式
-    getSummaries (param) {
+    getSummaries(param) {
       const { columns, data } = param;
       const sums = [];
       columns.forEach((column, index) => {
@@ -187,7 +160,7 @@ export default {
       return sums;
     },
     // 查询商品后添加到销售列表中
-    addGoodInSell () {
+    addGoodInSell() {
       if (this.goodId.length > 0) {
         const re = /^[0-9]{13}$/;
         let tmp = this.goodId.search(re);
@@ -206,22 +179,22 @@ export default {
         });
       }
     },
-    changeDiscounts (value, id) {
+    changeDiscounts(value, id) {
       this.$nextTick(() => {
-        this.modifyDiscounts({ value, id })
-      })
+        this.modifyDiscounts({ value, id });
+      });
     },
     // 删除一行销售商品
-    handleDelete (id) {
+    handleDelete(id) {
       this.delDealList(id);
     },
-    onSaleNumber () {
+    onSaleNumber() {
       if (this.sale > 0) {
         this.onSale(this.sale);
       }
     },
     // 清空销售列表
-    clearDeal () {
+    clearDeal() {
       this.$confirm("是否清空销售列表", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -235,7 +208,7 @@ export default {
         });
     },
     // 结算
-    settleAccounts () {
+    settleAccounts() {
       this.sell()
         .then(() => {
           this.goodId = "";
