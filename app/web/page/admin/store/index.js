@@ -27,7 +27,7 @@ export default function createStore(state) {
       goodsDeal,
       goodsInput,
       goodsEarning,
-      goodsEarning,
+      goodsExpend,
       goodsStatistics,
       personal
     },

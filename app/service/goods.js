@@ -189,4 +189,38 @@ module.exports = class GoodService extends egg.Service {
       result
     }
   }
+  // 获取商品库存
+  async getGoodInventory(condition) {
+    let keyList = Object.keys(condition);
+    let data = [];
+    if (keyList.length = 0) {
+      data = this.app.mysql.select('v_inventory_info', {
+        columns: ['good_id', 'good_number', 'good_name', 'good_variety'], // 要查询的表字段
+        orders: [
+          ['good_number', 'asc']
+        ] // 排序方式
+
+      })
+    } else {
+      const {
+        goodVariety,
+        goodId,
+        sort
+      } = condition
+      let where = {}
+      if (goodVariety != undefined) {
+        where.good_variety = goodVariety
+      }
+      if (goodId != undefined) {
+        where.good_id = goodId
+      }
+      data = await this.app.mysql.select('v_inventory_info', {
+        where: where, // WHERE 条件
+        columns: ['good_id', 'good_number', 'good_name', 'good_variety'], // 要查询的表字段
+        orders: [
+          ['good_number', `${sort!=undefined?sort:'asc'}`]
+        ] // 排序方式
+      });
+    }
+  }
 };

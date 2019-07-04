@@ -119,7 +119,7 @@ export default {
     ...mapGetters("goodsDeal", ["computedDealList"])
   },
   methods: {
-    ...mapActions("goodsDeal", ["onSale", "getGoodInfoById","sell"]),
+    ...mapActions("goodsDeal", ["onSale", "getGoodInfoById", "sell"]),
     ...mapMutations("goodsDeal", {
       clearDealList: "CLEAR_DEAL_LIST",
       delDealList: "DEL_DEAL_LIST",
@@ -166,6 +166,7 @@ export default {
         let tmp = this.goodId.search(re);
         if (tmp > -1) {
           this.getGoodInfoById(this.goodId);
+          this.goodId = "";
         } else {
           this.$message({
             type: "warning",

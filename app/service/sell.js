@@ -82,5 +82,46 @@ module.exports = class SellService extends egg.Service {
             result
         }
     }
+    // 获取销售记录
+    async getSellRecode(condition) {
+        const {
+            startTime,
+            endTime,
+            goodVariety,
+            goodName,
+            goodId
+        } = condition
 
+        let sqlStr = `SELECT good_id,good_name,SUM(sell_num),good_variety FROM v_sell_info`
+        let sqlConition = {}
+        if (Object.keys(condition).length > 0) {
+            let sqlStr2 = 'WHERE'
+            if (startTime !== undefined || endTime !== undefined) {
+                sqlStr2 += ' sell_date BETWEEN :startTime and :endTime'
+                sqlConition.startTime = startTime
+                sqlConition.endTime = endTime
+            }
+            if (goodVariety !== undefined) {
+                sqlStr2 += `${sqlStr2.length > 6?'AND':''} good_variety=:goodVariety`
+                sqlConition.goodVariety = goodVariety
+            }
+            if (goodName != undefined) {
+                sqlStr2 += `${sqlStr2.length > 6?'AND':''} good_name :goodName`
+                sqlConition.goodName = `like %${goodName}%`
+            }
+            if (goodId != undefined) {
+                sqlStr2 += `${sqlStr2.length > 6?'AND':''} good_id=:goodId`
+                sqlConition.goodId = goodId
+            }
+            sqlStr += `${sqlStr2} GROUP BY good_id ORDER BY sell_num DESC`
+        } else {
+            sqlStr += 'GROUP BY good_id ORDER BY sell_num DESC'
+        }
+
+        let goodInventory = Object.keys(sqlConition).length > 0 ? await this.app.mysql.query(sqlStr, sqlConition) : await this.app.mysql.query(sqlStr)
+
+        return {
+            result: goodInventory
+        }
+    }
 };
