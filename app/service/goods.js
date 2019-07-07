@@ -83,7 +83,7 @@ module.exports = class GoodService extends egg.Service {
       if (good.havfather === "1") {
         await conn.insert('tb_relevancy', {
           son_good_id: good.goodId,
-          father_good_id: good.father_good_id,
+          father_good_id: good.fatherGoodId,
           ratio: good.ratio,
           update_time: this.app.mysql.literals.now
         })
