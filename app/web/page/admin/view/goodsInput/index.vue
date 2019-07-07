@@ -113,8 +113,8 @@
         </el-form-item>
       </el-form>
     </el-row>
-    <el-dialog title="最近添加记录" :visible.sync="dialogVisible" width="80%" :before-close="handleClose">
-      <el-row :style="{padding:'10px'}">
+    <el-dialog title="最近添加记录" :visible.sync="dialogVisible" width="80%" top="10vh" :before-close="handleClose">
+      <el-row :style="{padding:'5px'}">
         <el-col :span="16">
           <el-input v-model="recordGoodId" placeholder="请输入商品编号"></el-input>
         </el-col>
@@ -203,9 +203,6 @@
           :total="total"
         ></el-pagination>
       </el-row>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="close">关闭</el-button>
-      </span>
     </el-dialog>
   </div>
 </template>
@@ -477,7 +474,7 @@ export default {
   }
   .goods-input-table {
     flex: auto;
-    padding: 10px 10px;
+    padding: 10px 5px;
   }
 }
 </style>

@@ -1,54 +1,82 @@
 <template>
   <div class="goodsStatistics">
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane label="总览" name="first">
-        商品库存top，热销top，冷淡top
+    <el-tabs
+      v-model="activeName"
+      type="card"
+      @tab-click="handleClick"
+    >
+      <el-tab-pane
+        label="总览"
+        name="first"
+      >
         <el-row>
-          <el-col :span="12">
-            <v-chart auto-resize :options="option2"></v-chart>
+          <el-col
+            :span="12"
+            :style="{height:contentHeight/2+'px'}"
+          >
+            <v-chart
+              auto-resize
+              ref="topTnventoryChart"
+              :options="topInventoryOption"
+            ></v-chart>
           </el-col>
-          <el-col :span="12">
-            <v-chart auto-resize :options="option2"></v-chart>
+          <el-col
+            :span="12"
+            :style="{height:contentHeight/2+'px'}"
+          >
+            <v-chart
+              auto-resize
+              :options="option2"
+            ></v-chart>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <div>
+            <div class="goodsStatistics-center">
               <el-date-picker
-                v-model="value5"
-                type="datetimerange"
-                size="small"
-                :picker-options="pickerOptions2"
+                v-model="sellTopTime"
+                type="daterange"
+                size="mini"
+                :picker-options="pickerOptions"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 align="right"
               ></el-date-picker>
             </div>
-            <div :style="{height:'300px'}">
-              <v-chart auto-resize :options="option"></v-chart>
+            <div :style="{height:contentHeight/2-28+'px'}">
+              <v-chart
+                auto-resize
+                :options="option2"
+              ></v-chart>
             </div>
           </el-col>
           <el-col :span="12">
-            <div>
+            <div class="goodsStatistics-center">
               <el-date-picker
-                v-model="value5"
-                type="datetimerange"
-                size="small"
-                :picker-options="pickerOptions2"
+                v-model="sellBottomTime"
+                type="daterange"
+                size="mini"
+                :picker-options="pickerOptions"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 align="right"
               ></el-date-picker>
             </div>
-            <div :style="{height:'300px'}">
-              <v-chart auto-resize :options="option"></v-chart>
+            <div :style="{height:contentHeight/2-28+'px'}">
+              <v-chart
+                auto-resize
+                :options="option2"
+              ></v-chart>
             </div>
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="商品销售量" name="second">
+      <el-tab-pane
+        label="商品销售量"
+        name="second"
+      >
         <el-row>
           <el-date-picker
             v-model="value5"
@@ -60,7 +88,11 @@
             end-placeholder="结束日期"
             align="right"
           ></el-date-picker>
-          <el-select v-model="value" placeholder="请选择品类" size="small">
+          <el-select
+            v-model="value"
+            placeholder="请选择品类"
+            size="small"
+          >
             <el-option
               v-for="item in varietyOption"
               :key="item.value"
@@ -68,17 +100,40 @@
               :value="item.value"
             ></el-option>
           </el-select>
-          <el-input v-model="name" size="small" placeholder="请输入商品名称" :style="{width:'194px'}"></el-input>
-          <el-input v-model="name" size="small" placeholder="请输入商品编号" :style="{width:'194px'}"></el-input>
-          <el-button type="primary" size="small">查询</el-button>
+          <el-input
+            v-model="name"
+            size="small"
+            placeholder="请输入商品名称"
+            :style="{width:'194px'}"
+          ></el-input>
+          <el-input
+            v-model="name"
+            size="small"
+            placeholder="请输入商品编号"
+            :style="{width:'194px'}"
+          ></el-input>
+          <el-button
+            type="primary"
+            size="small"
+          >查询</el-button>
         </el-row>
         <el-row>
-          <v-chart auto-resize :options="option2"></v-chart>
+          <v-chart
+            auto-resize
+            :options="option2"
+          ></v-chart>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="商品库存" name="third">
+      <el-tab-pane
+        label="商品库存"
+        name="third"
+      >
         <el-row>
-          <el-select v-model="value" placeholder="请选择品类" size="small">
+          <el-select
+            v-model="value"
+            placeholder="请选择品类"
+            size="small"
+          >
             <el-option
               v-for="item in varietyOption"
               :key="item.value"
@@ -86,11 +141,22 @@
               :value="item.value"
             ></el-option>
           </el-select>
-          <el-input v-model="name" size="small" placeholder="请输入商品编号" :style="{width:'194px'}"></el-input>
-          <el-button type="primary" size="small">查询</el-button>
+          <el-input
+            v-model="name"
+            size="small"
+            placeholder="请输入商品编号"
+            :style="{width:'194px'}"
+          ></el-input>
+          <el-button
+            type="primary"
+            size="small"
+          >查询</el-button>
         </el-row>
         <el-row>
-          <v-chart auto-resize :options="option2"></v-chart>
+          <v-chart
+            auto-resize
+            :options="option2"
+          ></v-chart>
         </el-row>
       </el-tab-pane>
     </el-tabs>
@@ -102,14 +168,14 @@ import { mapGetters, mapState, mapActions } from "vuex";
 import echarts from "vue-echarts";
 export default {
   name: "GoodsStatistics",
-  data() {
+  data () {
     return {
       activeName: "first",
-      pickerOptions2: {
+      pickerOptions: {
         shortcuts: [
           {
             text: "最近一周",
-            onClick(picker) {
+            onClick (picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
@@ -118,7 +184,7 @@ export default {
           },
           {
             text: "最近一个月",
-            onClick(picker) {
+            onClick (picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
@@ -127,7 +193,7 @@ export default {
           },
           {
             text: "最近三个月",
-            onClick(picker) {
+            onClick (picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
@@ -136,75 +202,50 @@ export default {
           }
         ]
       },
-      value5: "",
+      sellTopTime: [new Date(), new Date()],
+      sellBottomTime: [new Date(), new Date()],
       value: "",
       name: "",
-      option: {
-        xAxis: {
-          data: ["点", "击", "柱"],
-          axisLabel: {
-            inside: true,
-            textStyle: {
-              color: "#fff"
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          axisLine: {
-            show: false
-          },
-          z: 10
+      topInventoryOption: {
+        title: {
+          text: '库存数量前五',
+          textAlign: 'auto'
         },
-        yAxis: {
-          axisLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            textStyle: {
-              color: "#999"
-            }
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
           }
         },
-        dataZoom: [
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
           {
-            type: "inside"
+            type: "value"
+          }
+        ],
+        yAxis: [
+          {
+            type: "category",
+            axisTick: { show: false },
+            data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
           }
         ],
         series: [
           {
-            // For shadow
+            name: "利润",
             type: "bar",
-            itemStyle: {
-              normal: { color: "rgba(0,0,0,0.05)" }
-            },
-            barGap: "-100%",
-            barCategoryGap: "40%",
-            data: [500, 500, 500],
-            animation: false
-          },
-          {
-            type: "bar",
-            itemStyle: {
+            label: {
               normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: "#83bff6" },
-                  { offset: 0.5, color: "#188df0" },
-                  { offset: 1, color: "#188df0" }
-                ])
-              },
-              emphasis: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: "#2378f7" },
-                  { offset: 0.7, color: "#2378f7" },
-                  { offset: 1, color: "#83bff6" }
-                ])
+                show: true,
+                position: "inside"
               }
-            },
-            data: [220, 182, 191]
+            }
           }
         ]
       },
@@ -252,12 +293,21 @@ export default {
   },
   computed: {
     ...mapState(["winHeight"]),
-    ...mapState("goodsInput", ["varietyOption"])
+    ...mapState("goodsInput", ["varietyOption"]),
+    contentHeight () {
+      return this.winHeight - 127
+    }
   },
   methods: {
-    handleClick(tab, event) {
+    handleClick (tab, event) {
       console.log(tab, event);
     }
+  },
+  mounted () {
+    console.log(this.$refs)
+    this.$refs['topTnventoryChart'].mergeOptions({
+      series: [{ data: [100, 170, 140, 244, 200, 120, 210] }]
+    })
   },
   components: {
     "v-chart": echarts
@@ -270,5 +320,13 @@ export default {
   width: 100%;
   height: 100%;
   background-color: white;
+  &-center {
+    display: flex;
+    justify-content: center;
+  }
+}
+.echarts {
+  width: 100%;
+  height: 100%;
 }
 </style>
