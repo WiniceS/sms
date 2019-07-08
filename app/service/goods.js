@@ -199,7 +199,6 @@ module.exports = class GoodService extends egg.Service {
         orders: [
           ['good_number', 'asc']
         ] // 排序方式
-
       })
     } else {
       const {
@@ -221,6 +220,9 @@ module.exports = class GoodService extends egg.Service {
           ['good_number', `${sort!=undefined?sort:'asc'}`]
         ] // 排序方式
       });
+    }
+    return {
+      data
     }
   }
 };

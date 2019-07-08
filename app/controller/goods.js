@@ -35,4 +35,10 @@ module.exports = class GoodsController extends egg.Controller {
     const result = await ctx.service.goods.addGood(goodInfo)
     this.ctx.body = result
   }
+  // 获取商品库存
+  async getGoodInventory(ctx) {
+    const condition = this.ctx.request.body
+    const result = await ctx.service.goods.getGoodInventory(condition)
+    this.ctx.body = result
+  }
 };

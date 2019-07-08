@@ -15,6 +15,8 @@ module.exports = app => {
   router.post('/goods/api/goods/delGoodById', controller.goods.delGoodById);
   router.post('/goods/api/goods/updateGoodById', controller.goods.updateGoodById);
   router.post('/goods/api/goods/addGood', controller.goods.addGood);
+  router.post('/goods/api/goods/getGoodInventory', controller.goods.getGoodInventory);
   // 销售模块的路由
   router.post('/sell/api/sell', controller.sell.sell);
+  router.post('/sell/api/getSellRecord', controller.sell.getSellRecord);
 };

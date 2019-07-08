@@ -83,7 +83,7 @@ module.exports = class SellService extends egg.Service {
         }
     }
     // 获取销售记录
-    async getSellRecode(condition) {
+    async getSellRecord(condition) {
         const {
             startTime,
             endTime,
@@ -118,10 +118,10 @@ module.exports = class SellService extends egg.Service {
             sqlStr += 'GROUP BY good_id ORDER BY sell_num DESC'
         }
 
-        let goodInventory = Object.keys(sqlConition).length > 0 ? await this.app.mysql.query(sqlStr, sqlConition) : await this.app.mysql.query(sqlStr)
+        let sellRecord = Object.keys(sqlConition).length > 0 ? await this.app.mysql.query(sqlStr, sqlConition) : await this.app.mysql.query(sqlStr)
 
         return {
-            result: goodInventory
+            result: sellRecord
         }
     }
 };

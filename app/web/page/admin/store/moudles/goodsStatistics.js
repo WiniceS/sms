@@ -1,14 +1,256 @@
+import request from 'framework/network/request';
+
 // initial state
 // shape: [{ id, quantity }]
 const state = {
-  items: [],
-  checkoutStatus: null
+  topInventoryOption: {
+    title: {
+      text: "库存数量前五",
+      textAlign: "auto"
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        // 坐标轴指示器，坐标轴触发有效
+        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
+    },
+    xAxis: [{
+      type: "value"
+    }],
+    yAxis: [{
+      type: "category",
+      axisTick: {
+        show: false
+      },
+      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    }],
+    series: [{
+      name: "库存",
+      type: "bar",
+      label: {
+        normal: {
+          show: true,
+          position: "inside"
+        }
+      }
+    }]
+  },
+  bottomInventoryOption: {
+    title: {
+      text: "库存数量后五",
+      textAlign: "auto"
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        // 坐标轴指示器，坐标轴触发有效
+        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
+    },
+    xAxis: [{
+      type: "value"
+    }],
+    yAxis: [{
+      type: "category",
+      axisTick: {
+        show: false
+      },
+      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    }],
+    series: [{
+      name: "库存",
+      type: "bar",
+      label: {
+        normal: {
+          show: true,
+          position: "inside"
+        }
+      }
+    }]
+  },
+  topSellOption: {
+    title: {
+      text: "销售数量前五",
+      textAlign: "auto"
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        // 坐标轴指示器，坐标轴触发有效
+        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
+    },
+    xAxis: [{
+      type: "value"
+    }],
+    yAxis: [{
+      type: "category",
+      axisTick: {
+        show: false
+      },
+      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    }],
+    series: [{
+      name: "销售量",
+      type: "bar",
+      label: {
+        normal: {
+          show: true,
+          position: "inside"
+        }
+      },
+      data: [200, 170, 240, 244, 200, 220, 210]
+    }]
+  },
+  bottomSellOption: {
+    title: {
+      text: "销售数量后五",
+      textAlign: "auto"
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        // 坐标轴指示器，坐标轴触发有效
+        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
+    },
+    xAxis: [{
+      type: "value"
+    }],
+    yAxis: [{
+      type: "category",
+      axisTick: {
+        show: false
+      },
+      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    }],
+    series: [{
+      name: "销售量",
+      type: "bar",
+      label: {
+        normal: {
+          show: true,
+          position: "inside"
+        }
+      },
+      data: [200, 170, 240, 244, 200, 220, 210]
+    }]
+  },
+  sellOption: {
+    title: {
+      text: "销售数量",
+      textAlign: "auto"
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        // 坐标轴指示器，坐标轴触发有效
+        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
+    },
+    xAxis: [{
+      type: "value"
+    }],
+    yAxis: [{
+      type: "category",
+      axisTick: {
+        show: false
+      },
+      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    }],
+    series: [{
+      name: "销售量",
+      type: "bar",
+      label: {
+        normal: {
+          show: true,
+          position: "inside"
+        }
+      },
+      data: [200, 170, 240, 244, 200, 220, 210]
+    }]
+  },
+  inventoryOption: {
+    title: {
+      text: "库存数量",
+      textAlign: "auto"
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        // 坐标轴指示器，坐标轴触发有效
+        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
+    },
+    xAxis: [{
+      type: "value"
+    }],
+    yAxis: [{
+      type: "category",
+      axisTick: {
+        show: false
+      },
+      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    }],
+    series: [{
+      name: "库存",
+      type: "bar",
+      label: {
+        normal: {
+          show: true,
+          position: "inside"
+        }
+      },
+      data: [200, 170, 240, 244, 200, 220, 210]
+    }]
+  },
+  sellRecord: []
 }
 
 // getters
 const getters = {
   cartProducts: (state, getters, rootState) => {
-    return state.items.map(({ id, quantity }) => {
+    return state.items.map(({
+      id,
+      quantity
+    }) => {
       const product = rootState.products.all.find(product => product.id === id)
       return {
         title: product.title,
@@ -16,68 +258,33 @@ const getters = {
         quantity
       }
     })
-  },
-
-  cartTotalPrice: (state, getters) => {
-    return getters.cartProducts.reduce((total, product) => {
-      return total + product.price * product.quantity
-    }, 0)
   }
 }
 
 // actions
 const actions = {
-  checkout ({ commit, state }, products) {
-    const savedCartItems = [...state.items]
-    commit('setCheckoutStatus', null)
-    // empty cart
-    commit('setCartItems', { items: [] })
-    shop.buyProducts(
-      products,
-      () => commit('setCheckoutStatus', 'successful'),
-      () => {
-        commit('setCheckoutStatus', 'failed')
-        // rollback to the cart saved before sending the request
-        commit('setCartItems', { items: savedCartItems })
-      }
-    )
-  },
-
-  addProductToCart ({ state, commit }, product) {
-    commit('setCheckoutStatus', null)
-    if (product.inventory > 0) {
-      const cartItem = state.items.find(item => item.id === product.id)
-      if (!cartItem) {
-        commit('pushProductToCart', { id: product.id })
-      } else {
-        commit('incrementItemQuantity', cartItem)
-      }
-      // remove 1 item from stock
-      commit('products/decrementProductInventory', { id: product.id }, { root: true })
-    }
+  getSellRecode(store, {
+    condition
+  }) {
+    const {
+      commit,
+      dispatch,
+      state
+    } = store
+    return request.post('/sell/api/getSellRecord', {
+      condition
+    }, store).then(res => {
+      commit('setSellRecord', res.data)
+    })
   }
 }
 
 // mutations
 const mutations = {
-  pushProductToCart (state, { id }) {
-    state.items.push({
-      id,
-      quantity: 1
-    })
-  },
-
-  incrementItemQuantity (state, { id }) {
-    const cartItem = state.items.find(item => item.id === id)
-    cartItem.quantity++
-  },
-
-  setCartItems (state, { items }) {
-    state.items = items
-  },
-
-  setCheckoutStatus (state, status) {
-    state.checkoutStatus = status
+  setSellRecord(state, {
+    data
+  }) {
+    state.sellRecord = data
   }
 }
 
