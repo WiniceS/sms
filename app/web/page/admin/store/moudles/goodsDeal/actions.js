@@ -25,7 +25,7 @@ export default {
       dispatch,
       state
     } = store
-    return request.get(`/goods/api/goods/getGoodInfoById/${id}`, store).then(res => {
+    return request.get(`/goods/api/getGoodInfoById/${id}`, store).then(res => {
       let goodInfo = res.data.goodInfo
       if (goodInfo.length > 0) {
         let alreadyHad = state.goodsDealList.some(item => item.good_id === id)

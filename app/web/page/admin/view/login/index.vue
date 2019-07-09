@@ -67,7 +67,7 @@ export default {
     ...mapActions(['verifyUser']),
     async onSubmit () {
       await this.verifyUser(this.form)
-      this.$router.push('admin')
+      this.$router.push('/')
     },
     async checkUser () {
       await new Promise((resolve, reject) => {

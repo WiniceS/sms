@@ -6,32 +6,32 @@ const menu = {
   },
   deal: {
     name: 'menu.deal',
-    path: '/admin/deal',
+    path: '/deal',
     icon: 'el-icon-menu',
   },
   input: {
     name: 'menu.input',
-    path: '/admin/input',
+    path: '/input',
     icon: 'el-icon-menu',
   },
   statistics: {
     name: 'menu.statistics',
-    path: '/admin/statistics',
+    path: '/statistics',
     icon: 'el-icon-menu',
   },
   earning: {
     name: 'menu.earning',
-    path: '/admin/earning',
+    path: '/earning',
     icon: 'el-icon-menu',
   },
   expend: {
     name: 'menu.expend',
-    path: '/admin/expend',
+    path: '/expend',
     icon: 'el-icon-menu',
   },
   personal: {
     name: 'menu.personal',
-    path: '/admin/personal',
+    path: '/personal',
     icon: 'el-icon-menu',
   }
 };

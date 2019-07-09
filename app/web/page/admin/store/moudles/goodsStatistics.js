@@ -263,6 +263,7 @@ const getters = {
 
 // actions
 const actions = {
+  // 获取销售记录
   getSellRecode(store, {
     condition
   }) {
@@ -276,6 +277,21 @@ const actions = {
     }, store).then(res => {
       commit('setSellRecord', res.data)
     })
+  },
+  // 获取商品库存
+  getGoodInventory(store, {
+    condition
+  }) {
+    const {
+      commit,
+      dispatch,
+      state
+    } = store
+    return request.post('/goods/api/goods/getGoodInventory', {
+      condition
+    }, store).then(res => {
+      commit('setGoodInventory', res.data)
+    })
   }
 }
 
@@ -285,6 +301,11 @@ const mutations = {
     data
   }) {
     state.sellRecord = data
+  },
+  setGoodInventory(state, {
+    data
+  }) {
+    state.goodInventory = data
   }
 }
 

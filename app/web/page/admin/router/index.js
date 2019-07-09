@@ -9,8 +9,8 @@ export default function createRouter() {
   return new VueRouter({
     mode: 'history',
     routes: [{
-        path: '/admin',
-        name: '/admin',
+        path: '/',
+        name: 'admin',
         component: Admin,
         children: [{
             path: 'deal',

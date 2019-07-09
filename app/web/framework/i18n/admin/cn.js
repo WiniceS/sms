@@ -13,7 +13,7 @@ export default {
     personal: '个人信息'
   },
   lang: {
-    href: '/admin?locale=en',
+    href: '/?locale=en',
     text: '中文'
   },
   header: {

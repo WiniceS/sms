@@ -83,7 +83,7 @@ export default {
       window.location.replace("/login");
     },
     switchLang (lang) {
-      window.location.href = `/admin?locale=${lang}`;
+      window.location.href = `/?locale=${lang}`;
     }
   },
   mounted: function () {
