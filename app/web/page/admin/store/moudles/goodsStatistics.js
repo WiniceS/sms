@@ -162,84 +162,170 @@ const state = {
     }]
   },
   sellOption: {
-    title: {
-      text: "销售数量",
-      textAlign: "auto"
-    },
     tooltip: {
-      trigger: "axis",
+      trigger: 'axis',
       axisPointer: {
-        // 坐标轴指示器，坐标轴触发有效
-        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+        type: 'shadow',
+        label: {
+          show: true
+        }
       }
     },
+    toolbox: {
+      show: true,
+      feature: {
+        mark: {
+          show: true
+        },
+        dataView: {
+          show: true,
+          readOnly: false
+        },
+        magicType: {
+          show: true,
+          type: ['line', 'bar']
+        },
+        restore: {
+          show: true
+        },
+        saveAsImage: {
+          show: true
+        }
+      }
+    },
+    calculable: true,
+    legend: {
+      data: ['Growth', 'Budget 2011', 'Budget 2012'],
+      itemGap: 5
+    },
     grid: {
-      left: "3%",
-      right: "4%",
-      bottom: "3%",
+      top: '12%',
+      left: '1%',
+      right: '10%',
       containLabel: true
     },
     xAxis: [{
-      type: "value"
+      type: 'category',
+      data: ['Securities', 'Other', 'Office', 'Departmental', 'United', 'Public', 'Christopher', 'Morris']
     }],
     yAxis: [{
-      type: "category",
-      axisTick: {
-        show: false
-      },
-      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+      type: 'value',
+      name: 'Budget (million USD)'
     }],
-    series: [{
-      name: "销售量",
-      type: "bar",
-      label: {
-        normal: {
-          show: true,
-          position: "inside"
-        }
+    dataZoom: [{
+        show: true,
+        start: 94,
+        end: 100
       },
-      data: [200, 170, 240, 244, 200, 220, 210]
-    }]
+      {
+        type: 'inside',
+        start: 94,
+        end: 100
+      },
+      {
+        show: true,
+        yAxisIndex: 0,
+        filterMode: 'empty',
+        width: 30,
+        height: '80%',
+        showDataShadow: false,
+        left: '93%'
+      }
+    ],
+    series: [{
+        name: 'Budget 2011',
+        type: 'bar',
+        data: [300, 1000, 1200, 1300, 2000, 2000, 1000, 3000]
+      },
+      {
+        name: 'Budget 2012',
+        type: 'bar',
+        data: [300, 1000, 1200, 1300, 2000, 2000, 1000, 3000]
+      }
+    ]
   },
   inventoryOption: {
-    title: {
-      text: "库存数量",
-      textAlign: "auto"
-    },
     tooltip: {
-      trigger: "axis",
+      trigger: 'axis',
       axisPointer: {
-        // 坐标轴指示器，坐标轴触发有效
-        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+        type: 'shadow',
+        label: {
+          show: true
+        }
       }
     },
+    toolbox: {
+      show: true,
+      feature: {
+        mark: {
+          show: true
+        },
+        dataView: {
+          show: true,
+          readOnly: false
+        },
+        magicType: {
+          show: true,
+          type: ['line', 'bar']
+        },
+        restore: {
+          show: true
+        },
+        saveAsImage: {
+          show: true
+        }
+      }
+    },
+    calculable: true,
+    legend: {
+      data: ['Growth', 'Budget 2011', 'Budget 2012'],
+      itemGap: 5
+    },
     grid: {
-      left: "3%",
-      right: "4%",
-      bottom: "3%",
+      top: '12%',
+      left: '1%',
+      right: '10%',
       containLabel: true
     },
     xAxis: [{
-      type: "value"
+      type: 'category',
+      data: ['Securities', 'Other', 'Office', 'Departmental', 'United', 'Public', 'Christopher', 'Morris']
     }],
     yAxis: [{
-      type: "category",
-      axisTick: {
-        show: false
-      },
-      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+      type: 'value',
+      name: 'Budget (million USD)'
     }],
-    series: [{
-      name: "库存",
-      type: "bar",
-      label: {
-        normal: {
-          show: true,
-          position: "inside"
-        }
+    dataZoom: [{
+        show: true,
+        start: 94,
+        end: 100
       },
-      data: [200, 170, 240, 244, 200, 220, 210]
-    }]
+      {
+        type: 'inside',
+        start: 94,
+        end: 100
+      },
+      {
+        show: true,
+        yAxisIndex: 0,
+        filterMode: 'empty',
+        width: 30,
+        height: '80%',
+        showDataShadow: false,
+        left: '93%'
+      }
+    ],
+    series: [{
+        name: 'Budget 2011',
+        type: 'bar',
+        data: [300, 1000, 1200, 1300, 2000, 2000, 1000, 3000]
+      },
+      {
+        name: 'Budget 2012',
+        type: 'bar',
+        data: [300, 1000, 1200, 1300, 2000, 2000, 1000, 3000]
+      }
+    ]
   },
   sellRecord: []
 }

@@ -5,7 +5,7 @@ module.exports = app => {
     controller
   } = app;
   router.get('/', controller.admin.home);
-  // router.get('/admin(/.+)?', controller.admin.home);
+  router.get('/(.+)?', controller.admin.home);
   // 登录模块的路由
   router.get('/login', controller.admin.home);
   router.post('/login/api/login', controller.login.login);

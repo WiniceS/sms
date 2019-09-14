@@ -81,7 +81,7 @@
           ></el-input>
           <el-button type="primary" size="small">查询</el-button>
         </el-row>
-        <el-row>
+        <el-row :style="{height:contentHeight-50+'px'}">
           <v-chart auto-resize :options="sellOption"></v-chart>
         </el-row>
       </el-tab-pane>
@@ -103,7 +103,7 @@
           ></el-input>
           <el-button type="primary" size="small">查询</el-button>
         </el-row>
-        <el-row>
+        <el-row :style="{height:contentHeight-50+'px'}">
           <v-chart auto-resize :options="inventoryOption"></v-chart>
         </el-row>
       </el-tab-pane>
